@@ -1,0 +1,31 @@
+.ionlink{
+    font-size: 18px;
+    color: snow;
+    text-decoration: none;
+
+}
+.ionContainer{
+    padding-left: 10px;
+
+}
+.ionImagRadius{
+    background: rgba(71, 71, 68, 0.95); /* Цвет фона */
+    border: 2px solid black; /* Параметры рамки */
+    padding: 5px; /* Поля вокруг текста */
+    margin:5px; /* Отступ снизу */
+    border-radius: 5px;
+}
+
+.vertical-align-center {
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+.vertical-align-center  .valign-center {
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+}
+.ionSelect{
+    background: #5f5f5a;
+}
