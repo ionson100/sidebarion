@@ -1,21 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-
 import Buttons from "./Buttons";
 import reportWebVitals from './reportWebVitals';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
-import App from "./example";
 import WrapperSideBar from "./WrapperSideBar";
 import BarData from "./BarData";
 import {Head,MenuItem} from "./BarData";
-import { FaRocket,FaAddressCard,FaAddressBook,FaStar} from 'react-icons/fa';
-import Button from "react-bootstrap/Button";
+import { FaAddressCard,FaAddressBook,FaStar,FaRoute} from 'react-icons/fa';
 
 
 const barData=new BarData();
@@ -36,6 +27,7 @@ barData.head=new Head("Просто приложение",true)
     mymenu.href="Просто2";
     mymenu.imageSrc=<FaStar/>
     mymenu.imageSize=23;
+    mymenu.tooltip="Прстое меню Моя первая кнопка"
     barData.menuItems.push(mymenu);
     {
         const mi=new MenuItem();
@@ -43,6 +35,7 @@ barData.head=new Head("Просто приложение",true)
         mi.href="/wwww1"
         mi.imageSize=20;
         mi.imageSrc="./images/image1.svg"
+
         mymenu.menuItems.push(mi);
     }
     {
@@ -86,6 +79,61 @@ barData.head=new Head("Просто приложение",true)
         mi.imageSrc="./images/image1.svg"
         mymenu.menuItems.push(mi);
     }
+
+
+    {
+        const mi=new MenuItem();
+        mi.content="wwww3";
+        mi.href="/wwww3"
+        mi.imageSize=20;
+        mi.imageSrc=<FaAddressCard/>
+
+        mymenu.menuItems.push(mi);
+
+    }
+    {
+        const mi=new MenuItem();
+        mi.content="Маршрут:";
+        mi.href="/wwww1"
+        mi.imageSize=20;
+        mi.imageSrc=<FaRoute color="red" size={20}/>
+        mymenu.menuItems.push(mi);
+    }
+    {
+        const mi=new MenuItem();
+        mi.content="wwww2";
+        mi.href="/wwww2"
+        mi.imageSize=20;
+        mi.imageSrc="./images/image1.svg"
+        mymenu.menuItems.push(mi);
+    }
+
+    {
+        const mi=new MenuItem();
+        mi.content="wwww3";
+        mi.href="/wwww3"
+        mi.imageSize=20;
+        mi.imageSrc=<FaAddressCard/>
+
+        mymenu.menuItems.push(mi);
+
+    }
+    {
+        const mi=new MenuItem();
+        mi.content="wwww1";
+        mi.href="/wwww1"
+        mi.imageSize=20;
+        mi.imageSrc="./images/image1.svg"
+        mymenu.menuItems.push(mi);
+    }
+    {
+        const mi=new MenuItem();
+        mi.content="wwww2";
+        mi.href="/wwww2"
+        mi.imageSize=20;
+        mi.imageSrc="./images/image1.svg"
+        mymenu.menuItems.push(mi);
+    }
     {
         const mi=new MenuItem();
         mi.content="wwww3";
@@ -98,27 +146,63 @@ barData.head=new Head("Просто приложение",true)
     }
     barData.menuItems.push(mymenu);
 }
-barData.selectBackground="#33001a"
+
+
+const cont = {
+    name: "not selected"
+
+};
+
+barData.on("onclick",(menuitem)=>{
+    cont.name=menuitem.href;
+    initContent(cont)
+})
+
+function  initContent(props){
+    const element = (
+        <div>
+            <h2>{props.name}</h2>
+        </div>
+    );
+    ReactDOM.render(element, document.getElementById('content'));
+}
+
+
+
+const d=document.getElementById('bt1');
+d.onclick=function (){
+    {
+        const mi=new MenuItem();
+        mi.content="Test-22";
+        mi.href="/test22"
+        mi.imageSize=20;
+        mi.imageSrc=<FaRoute color="green"></FaRoute>
+        barData.menuItems[1].menuItems.push(mi)
+    }
+
+    barData.forceUpdate()
+}
+const d2=document.getElementById('bt2');
+const st={click:true}
+d2.onclick=()=>{
+    if(st.click){
+        barData.openWidth=0;
+
+    }else{
+        barData.openWidth=300;
+    }
+    st.click=!st.click;
+    barData.forceUpdate()
+};
 
 
 
 
-
-
-
+barData.closeWidth=70;
+barData.openWidth=300;
+barData.isOpen=true;
 const wrap=new WrapperSideBar(barData,"root");
 wrap.init()
-// const  ass=new App({rows:['assa1','assa2','assa3']});
-// ReactDOM.render(
-//
-//     <App rows={['assa1','assa2','assa3']}/>
-//
-//  ,
-//   document.getElementById('root')
-// );
+initContent(cont)
 
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

@@ -1,6 +1,6 @@
 .ionMenu{
     background: #282c34;
-    width: 300px;
+    transition: all .1s linear;
 }
 .ionlink{
     font-size: 18px;
@@ -17,10 +17,8 @@
     border: 2px solid black; /* Параметры рамки */
     padding-left: 3px; /* Поля вокруг текста */
     padding-right: 3px;
-
     margin: 3px;
     border-radius: 5px;
-
 }
 .ionImageSubMeny{
     background: inherit; /* Цвет фона */
@@ -43,13 +41,26 @@
     vertical-align: middle;
     height: 100%;
 }
-.ionSelect{
+
+.selectMenu{
     background: #5f5f5a;
+    padding-left: 7px;
+    margin-top: 15px;
+    color: yellow;
+
+}
+.defaultMenu{
+    padding-left: 7px;
+    margin-top: 15px;
+}
+
+.selectSubMenu{
+    background: #5f5f5a;
+
 }
 #ionSideHead{
-    width: 100%;
     height: 100px;
-    padding: 10px;
+
     color: white;
 
 }
@@ -71,4 +82,14 @@
 #menu ul, #menu li {
      padding: 0;
     padding-left: 10px;
+}
+
+.container-fluid {
+    padding: 0px;
+    overflow: hidden;
+}
+.toggleOpen{
+    position: fixed;
+    left: 0px;
+    bottom:0px;
 }

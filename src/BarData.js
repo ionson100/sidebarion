@@ -1,10 +1,29 @@
 import { v4 as uuidv4 } from 'uuid';
-export default class BarData {
+import Dispatcher from "./Dispetcher";
+
+
+export default class BarData extends Dispatcher{
     constructor() {
+        super();
         this.head=new Head();
         this.menuItems=[]
         this.footer={}
+        this._openWidth=300;
+        this._currentWidth=300
+        this.closeWidth=100;
         this.selectBackground="red"
+        this.isOpen=true;
+    }
+
+    set openWidth(value){
+       this._openWidth=value;
+       this._currentWidth=value;
+    }
+    get openWidth(){
+        return this._openWidth;
+    }
+    forceUpdate(){
+        this.dispatch("render",{})
     }
 }
  export class Head {
@@ -26,6 +45,8 @@ export class MenuItem {
      this.imageSrc=null;
      this.imageMode=null;
      this.imageAlt=".."
+     this.tooltip=undefined
 
  }
+
 }

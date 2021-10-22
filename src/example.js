@@ -1,18 +1,15 @@
-import { FaRocket,FaAddressCard} from 'react-icons/fa';
-import React, {Component} from 'react';
+
+import React from 'react';
 import {
     BrowserRouter as Router,
-    Switch,
-    Route,
     Link
 } from "react-router-dom";
-import {isVisible} from "bootstrap/js/src/util";
 import "./expSide.css"
-import {forEach} from "react-bootstrap/ElementChildren";
 import SideBarData from "./SideBarData";
 import Image from "react-bootstrap/Image";
-
-
+import { FiAlignJustify } from "react-icons/fi";
+import Tooltip from "react-bootstrap/Tooltip";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 
 
 class SideBarion extends SideBarData{
@@ -22,34 +19,55 @@ class SideBarion extends SideBarData{
            barData:props.barData
         };
         this.mapMenu=new Map();
-        console.log(props.barData)
         this._greateMap(this.props.barData.menuItems)
         console.log(this.mapMenu)
 
 
     }
-    _greateMap(menus){
 
+    componentDidMount() {
+
+        this.state.barData.on("render",()=>{
+            console.log(`add menu id click: `,this.state.barData.menuItems[1])
+            this._greateMap(this.state.barData.menuItems)
+            this.forceUpdate();
+        })
+    }
+
+    _greateMap(menus){
        let d= Array.prototype.slice.call(menus)
        d.map((m)=>{
-           this.mapMenu.set(m.id,m);
+
+               console.log(`add menu id: `,m.id)
+           if(this.mapMenu.has(m.id)===false){
+               this.mapMenu.set(m.id,m);
+           }
+
            if(m.menuItems.length>0){
                this._greateMap(m.menuItems);
            }
+
+
        })
     }
 
-    updateItem(uuid) {
-        this.mapMenu.forEach((v,k)=>{
-            v._isSelect=false;
 
-        })
+    clickItem(uuid) {
+
         const  d=this.mapMenu.get(uuid);
         if(d){
+            this.mapMenu.forEach((v,k)=>{
+                v._isSelect=false;
+            })
             d._isSelect=true;
             d._isVisibleSubmenu = d._isVisibleSubmenu === false;
+            this.forceUpdate();
+            this.state.barData.dispatch("onclick",d)
+
+        }else{
+            console.error(`не могу найти блок меню с id: ${uuid}` )
         }
-        this.forceUpdate();
+
     }
     refreshImage(row){
         if(row.imageSrc){
@@ -80,19 +98,15 @@ class SideBarion extends SideBarData{
     renderSubmenu(menuItem){
         if(menuItem.menuItems.length>0){
             return(
-                <ul  className=" flex-sm-column " style={{display:menuItem._isVisibleSubmenu?'block':'none'}}>
+                <ul  className=" flex" style={{display:this.getDisplay(menuItem)}}>
 
                     {menuItem.menuItems.map((row,i)=>{
                         return(
                             <li key={row.id} className="container  ionContainer submenuitem">
 
-                                <Link to={row.href} style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                                    <div className="row w-100  ionlink " id={row.id}
-                                         onClick={(event)=>{this.updateItem(row.id)}}
-                                         style={{background:row._isSelect?this.state.barData.selectBackground:"inherit"}}>
-
+                                <Link to={row.href} className="ionlink">
+                                    <div className={this.getClassNameSubMenuItem(row)} id={row.id} onClick={(event)=>{this.clickItem(row.id)}}>
                                         {this.refreshImage(row)}
-
                                         <div className="col align-self-center">
                                             {this.refreshContent(row)}
                                         </div>
@@ -108,40 +122,89 @@ class SideBarion extends SideBarData{
             return "";
         }
     }
-    updateModal(e) {
 
-        this.state.isVisible = this.state.isVisible === false;
-        this.forceUpdate();  e.currentTarget.classList.add("ionSelect")
+
+
+    getClassNameMenuItem(row){
+        if(row._isSelect){
+            return "row selectMenu"
+        }else{
+            return "row defaultMenu"
+        }
     }
 
+    getClassNameSubMenuItem(row){
+        if(row._isSelect){
+            return "row selectSubMenu"
+        }else{
+            return "row"
+        }
+    }
 
+    getDisplay(row){
+        if(this.state.barData.isOpen){
+            if(row){
+               if(row._isVisibleSubmenu===true){
+                   return "block";
+               }else{
+                   return "none";
+               }
+            }
+            return "block";
+        }
+        else{
+            return "none";
+        }
+    }
+    toggleMenu(){
+        alert(33)
+        //this.state.barData.isOpen=!this.state.barData.isOpen;
+        //this.forceUpdate();
+
+    }
+    overlayTooltipMenu(row){
+
+        if(row.tooltip&&this.state.barData.isOpen==false){
+            return (
+                <OverlayTrigger  placement="right-end" overlay={<Tooltip id={row.id}>{row.tooltip}</Tooltip>}>
+                  <div className={this.getClassNameMenuItem(row)}  id={row.id}
+                      onClick={(event)=>{this.clickItem(row.id)}}>
+                      {this.refreshImage(row)}
+                      <div className="col align-self-center"  style={{display:this.getDisplay(null)}}>
+                        {this.refreshContent(row)}
+                     </div>
+                  </div>
+                </OverlayTrigger>
+            );
+        }
+        return (
+            <div className={this.getClassNameMenuItem(row)}  id={row.id}
+                 onClick={(event)=>{this.clickItem(row.id)}}>
+                {this.refreshImage(row)}
+                <div className="col align-self-center"  style={{display:this.getDisplay(null)}}>
+                    {this.refreshContent(row)}
+                </div>
+            </div>
+        );
+
+    }
     render() {
         return(
             <Router>
-            <div className="container-fluid overflow-hidden " id="menu">
-                <div className="row vh-100 overflow-auto">
-                    <div className="col-12 col-sm-3 col-xl-2 px-sm-0 px-0 bg-dark d-flex sticky-top">
-                        <div
-                            className="d-flex flex-sm-column flex-row flex-grow-1  align-items-sm-start px-4 pt-0 ">
-                            <div id="ionSideHead">
+
+            <div className="container-fluid overflow-hidden bg-dark p-0" id="menu">
+                <div className="row vh-100 overflow-auto  p-0">
+                    <div className=" col-auto  d-flex   ionMenu" style={{width:this.state.barData._currentWidth}}>
+                        <div className="d-flex flex-md-column ">
+                            <div id="ionSideHead" style={{display:this.getDisplay(null)}}>
                                 <span id="ionSideHeadText">{this.state.barData?.head?.content??"None"}</span>
                             </div>
-                            <ul  className="nav nav-pills flex-sm-column w-100  p-0"  >
-
+                            <ul  className="nav"     >
                                 {this.state.barData.menuItems.map((row,i)=>{
                                     return(
-
                                         <li key={row.id} className="container  ionContainer p-0 menuitem">
-
-                                            <Link to={row.href} style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                                                <div className="row w-100  ionlink p-0" id={row.id}
-                                                     onClick={(event)=>{this.updateItem(row.id)}}
-                                                     style={{background:row._isSelect?this.state.barData.selectBackground:"inherit"}}>
-                                                    {this.refreshImage(row)}
-                                                    <div className="col align-self-center">
-                                                        {this.refreshContent(row)}
-                                                    </div>
-                                                </div>
+                                            <Link to={row.href} className="ionlink">
+                                                {this.overlayTooltipMenu(row)}
                                             </Link>
                                             {this.renderSubmenu(row)}
                                         </li>
@@ -149,33 +212,42 @@ class SideBarion extends SideBarData{
                                 })}
                             </ul>
 
+                            <div className=" py-sm-0 mt-sm-auto ms-auto ms-sm-0  p-0">
 
-                            <div className="dropdown py-sm-4 mt-sm-auto ms-auto ms-sm-0 flex-shrink-1">
-                                <button
-                                    className="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-                                    id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="https://github.com/mdo.png" alt="hugenerd" width="28" height="28"
-                                         className="rounded-circle"/>
-                                    <span className="d-none d-sm-inline mx-1">Joe</span>
-                                </button>
-                                <ul className="dropdown-menu dropdown-menu-dark text-small shadow"
-                                    aria-labelledby="dropdownUser1">
-                                    <li><button className="dropdown-item" >New project...</button></li>
-                                    <li><button className="dropdown-item" >Settings</button></li>
-                                    <li><button className="dropdown-item" >Profile</button></li>
-                                    <li>
-                                        <hr className="dropdown-divider"/>
-                                    </li>
-                                    <li><button className="dropdown-item" >Sign out</button></li>
-                                </ul>
+                                  <FiAlignJustify color="#a5a89d" size={30} className="toggleOpen" style={{display:this.getDispalyToogleOpen()}} onClick={()=>{
+                                      if(this.state.barData.isOpen===true){
+                                          this.state.barData.isOpen=false;
+                                          this.forceUpdate(()=>{
+                                              this.state.barData._currentWidth=this.state.barData.closeWidth;
+                                              this.forceUpdate();
+                                          })
+                                      }else{
+                                          this.state.barData._currentWidth=this.state.barData.openWidth;
+                                          this.forceUpdate(()=>{
+                                              this.state.barData.isOpen=true;
+                                              this.forceUpdate();
+                                          })
+                                      }
+                                  }}/>
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
+
             </Router>
         );
+    }
+
+    getDispalyToogleOpen() {
+
+        if(this.state.barData.closeWidth===this.state.barData.openWidth){
+            return "none";
+        }else{
+            return "block";
+        }
+
     }
 }
 

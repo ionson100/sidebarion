@@ -13,4 +13,5 @@ export default class WrapperSideBar {
             document.getElementById(this.root)
         );
     }
+
 }
