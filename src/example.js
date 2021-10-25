@@ -58,6 +58,7 @@ class SideBarion extends PureComponent{
            if(m.menuItems.length>0){
                this._createMap(m.menuItems);
            }
+           return false;
        })
     }
 
@@ -214,7 +215,7 @@ class SideBarion extends PureComponent{
     }
     overlayTooltipMenu(row){
 
-        if(row.tooltip&&this.state.barData.isOpen==false){
+        if(row.tooltip&&this.state.barData.isOpen===false){
             return (
                 <OverlayTrigger  placement="right-end" overlay={<Tooltip id={row.id}>{row.tooltip}</Tooltip>}>
                   <div className={this.getClassNameMenuItem(row)}  id={row.id}
