@@ -7,6 +7,10 @@
     color: snow;
     text-decoration: none;
 }
+.ionLink:hover{
+    color: yellow;
+
+}
 /*
 стиль контейнера меню
  */
@@ -46,6 +50,9 @@
     padding-left: 7px;
     margin-top: 15px;
 }
+.defaultMenu:hover{
+    background: #5f5f5a;
+}
 /**
 Стиль корневого менб выбранного
  */
@@ -63,11 +70,17 @@
 .defaultSubMenu{
  font-size: 15px;
 }
+.defaultSubMenu:hover{
+    background: #5f5f5a;
+}
 /**
 Стиль заголовка
  */
 .ionSideHead{
-
+ color: white;
+    text-align: center;
+    height: 50px;
+    width: 100%;
 }
 
 /**
@@ -76,6 +89,7 @@
 .selectSubMenu{
     background: #5f5f5a;
     font-size: 15px;
+    color: yellow;
 
 }
 /**

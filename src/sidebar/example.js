@@ -23,7 +23,6 @@ class SideBarion extends PureComponent{
         };
         this.mapMenu=new Map();
         this._createMap(this.props.barData.menuItems)
-        console.log(this.mapMenu)
         this.currentMenuItem={id:undefined};
         this.isRender=false;
 
@@ -50,7 +49,6 @@ class SideBarion extends PureComponent{
        let d= Array.prototype.slice.call(menus)
        d.map((m)=>{
 
-               console.log(`add menu id: `,m.id)
            if(this.mapMenu.has(m.id)===false){
                this.mapMenu.set(m.id,m);
            }

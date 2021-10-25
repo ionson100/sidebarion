@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
-import WrapperSideBar from "./WrapperSideBar";
-import BarData from "./BarData";
-import {Head,MenuItem} from "./BarData";
+import WrapperSideBar, {BarData,Head,MenuItem} from "./sidebar/WrapperSideBar";
 import { FaAddressCard,FaAddressBook,FaStar,FaRoute} from 'react-icons/fa';
 
 
@@ -195,6 +193,12 @@ d2.onclick=()=>{
     st.click=!st.click;
     barData.forceUpdate()
 };
+
+const d3=document.getElementById('bt3');
+d3.onclick=function (){
+    barData.menuItems[1].content="Test"
+    barData.forceUpdate();
+}
 
 
 
