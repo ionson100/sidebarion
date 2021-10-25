@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import Buttons from "./Buttons";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 import WrapperSideBar from "./WrapperSideBar";
 import BarData from "./BarData";
 import {Head,MenuItem} from "./BarData";
 import { FaAddressCard,FaAddressBook,FaStar,FaRoute} from 'react-icons/fa';
+
 
 
 

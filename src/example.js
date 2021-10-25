@@ -10,6 +10,7 @@ import { FiAlignJustify } from "react-icons/fi";
 import Tooltip from "react-bootstrap/Tooltip";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import {PureComponent} from "react";
+import { v4 as uuidv4 } from 'uuid';
 
 
 
@@ -17,7 +18,8 @@ class SideBarion extends PureComponent{
     constructor(props) {
         super(props);
         this.state = {
-           barData:props.barData
+           barData:props.barData,
+            markerUpdate:uuidv4()
         };
         this.mapMenu=new Map();
         this._createMap(this.props.barData.menuItems)
@@ -174,9 +176,40 @@ class SideBarion extends PureComponent{
         }
     }
     toggleMenu(){
-        alert(33)
-        //this.state.barData.isOpen=!this.state.barData.isOpen;
-        //this.forceUpdate();
+
+        if(this.state.barData.isOpen===true){
+
+            this.setState(prevState => {
+                let proxy = Object.assign({}, prevState);  // creating copy of state variable jasper
+                proxy.barData.isOpen=false;
+                proxy.markerUpdate=uuidv4();// update the name property, assign a new value
+                return proxy;                                // return new object jasper object
+            },()=>{
+
+                this.setState(prevState => {
+                    let proxy = Object.assign({}, prevState);  // creating copy of state variable jasper
+                    proxy.barData._currentWidth=this.state.barData.closeWidth;
+                    proxy.markerUpdate=uuidv4();// update the name property, assign a new value
+                    return proxy;                                // return new object jasper object
+                })
+            })
+
+        }else{
+
+            this.setState(prevState => {
+                let proxy = Object.assign({}, prevState);  // creating copy of state variable jasper
+                proxy.barData._currentWidth=this.state.barData.openWidth;
+                proxy.markerUpdate=uuidv4();// update the name property, assign a new value
+                return proxy;                                // return new object jasper object
+            },()=>{
+                this.setState(prevState => {
+                    let proxy = Object.assign({}, prevState);  // creating copy of state variable jasper
+                    proxy.barData.isOpen=true;
+                    proxy.markerUpdate=uuidv4();// update the name property, assign a new value
+                    return proxy;                                // return new object jasper object
+                })
+            })
+        }
 
     }
     overlayTooltipMenu(row){
@@ -231,21 +264,7 @@ class SideBarion extends PureComponent{
 
                             <div className=" py-sm-0 mt-sm-auto ms-auto ms-sm-0  p-0">
 
-                                  <FiAlignJustify color="#a5a89d" size={30} className="toggleOpen" style={{display:this.getDispalyToogleOpen()}} onClick={()=>{
-                                      if(this.state.barData.isOpen===true){
-                                          this.state.barData.isOpen=false;
-                                          this.forceUpdate(()=>{
-                                              this.state.barData._currentWidth=this.state.barData.closeWidth;
-                                              this.forceUpdate();
-                                          })
-                                      }else{
-                                          this.state.barData._currentWidth=this.state.barData.openWidth;
-                                          this.forceUpdate(()=>{
-                                              this.state.barData.isOpen=true;
-                                              this.forceUpdate();
-                                          })
-                                      }
-                                  }}/>
+                                  <FiAlignJustify color="#a5a89d" size={30} className="toggleOpen" style={{display:this.getDispalyToogleOpen()}} onClick={this.toggleMenu.bind(this)}/>
                             </div>
                         </div>
                     </div>
@@ -255,6 +274,9 @@ class SideBarion extends PureComponent{
 
             </Router>
         );
+    }
+    toggleOpen(){
+
     }
 
     getDispalyToogleOpen() {
