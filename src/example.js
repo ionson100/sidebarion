@@ -5,22 +5,25 @@ import {
     Link
 } from "react-router-dom";
 import "./expSide.css"
-import SideBarData from "./SideBarData";
 import Image from "react-bootstrap/Image";
 import { FiAlignJustify } from "react-icons/fi";
 import Tooltip from "react-bootstrap/Tooltip";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import {PureComponent} from "react";
 
 
-class SideBarion extends SideBarData{
+
+class SideBarion extends PureComponent{
     constructor(props) {
         super(props);
         this.state = {
            barData:props.barData
         };
         this.mapMenu=new Map();
-        this._greateMap(this.props.barData.menuItems)
+        this._createMap(this.props.barData.menuItems)
         console.log(this.mapMenu)
+        this.currentMenuItem={id:undefined};
+        this.isRender=false;
 
 
     }
@@ -29,12 +32,19 @@ class SideBarion extends SideBarData{
 
         this.state.barData.on("render",()=>{
             console.log(`add menu id click: `,this.state.barData.menuItems[1])
-            this._greateMap(this.state.barData.menuItems)
+            this._createMap(this.state.barData.menuItems)
             this.forceUpdate();
         })
     }
+    componentDidUpdate(){
 
-    _greateMap(menus){
+        if(this.isRender){
+            this.isRender=false;
+            this.state.barData.dispatch("onclick",this.currentMenuItem);
+        }
+    }
+
+    _createMap(menus){
        let d= Array.prototype.slice.call(menus)
        d.map((m)=>{
 
@@ -44,10 +54,8 @@ class SideBarion extends SideBarData{
            }
 
            if(m.menuItems.length>0){
-               this._greateMap(m.menuItems);
+               this._createMap(m.menuItems);
            }
-
-
        })
     }
 
@@ -61,8 +69,14 @@ class SideBarion extends SideBarData{
             })
             d._isSelect=true;
             d._isVisibleSubmenu = d._isVisibleSubmenu === false;
+            if(this.currentMenuItem.id!==uuid){
+                this.currentMenuItem=d;
+                this.isRender=true;
+
+            }
             this.forceUpdate();
-            this.state.barData.dispatch("onclick",d)
+
+
 
         }else{
             console.error(`не могу найти блок меню с id: ${uuid}` )
@@ -72,18 +86,19 @@ class SideBarion extends SideBarData{
     refreshImage(row){
         if(row.imageSrc){
             if(typeof row.imageSrc === 'string'){
-                return ( (<div className="col-md-auto ionImageSubMeny " >
+                return ( (<div className="col-md-auto ionImageSubMenu " >
                     <Image src={row.imageSrc} alt={row.imageAlt} width={row.imageSize} height={row.imageSize} />
                 </div>));
             }else{
                 return (
-                    (<div className="col-md-auto ionImageSubMeny " >
+                    (<div className="col-md-auto ionImageSubMenu " >
                         {row.imageSrc}
                     </div>)
                 );
             }
         }
     }
+
     refreshContent(row){
         if(row.content){
             if(typeof row.content==="string"){
@@ -95,6 +110,8 @@ class SideBarion extends SideBarData{
           return(<span  >Not content</span>);
         }
     }
+
+
     renderSubmenu(menuItem){
         if(menuItem.menuItems.length>0){
             return(
@@ -102,9 +119,9 @@ class SideBarion extends SideBarData{
 
                     {menuItem.menuItems.map((row,i)=>{
                         return(
-                            <li key={row.id} className="container  ionContainer submenuitem">
+                            <li key={row.id} className="container  ionContainer ">
 
-                                <Link to={row.href} className="ionlink">
+                                <Link to={row.href} className="ionLink">
                                     <div className={this.getClassNameSubMenuItem(row)} id={row.id} onClick={(event)=>{this.clickItem(row.id)}}>
                                         {this.refreshImage(row)}
                                         <div className="col align-self-center">
@@ -137,7 +154,7 @@ class SideBarion extends SideBarData{
         if(row._isSelect){
             return "row selectSubMenu"
         }else{
-            return "row"
+            return "row defaultSubMenu"
         }
     }
 
@@ -196,14 +213,14 @@ class SideBarion extends SideBarData{
                 <div className="row vh-100 overflow-auto  p-0">
                     <div className=" col-auto  d-flex   ionMenu" style={{width:this.state.barData._currentWidth}}>
                         <div className="d-flex flex-md-column ">
-                            <div id="ionSideHead" style={{display:this.getDisplay(null)}}>
+                            <div className="ionSideHead" style={{display:this.getDisplay(null)}}>
                                 <span id="ionSideHeadText">{this.state.barData?.head?.content??"None"}</span>
                             </div>
                             <ul  className="nav"     >
                                 {this.state.barData.menuItems.map((row,i)=>{
                                     return(
                                         <li key={row.id} className="container  ionContainer p-0 menuitem">
-                                            <Link to={row.href} className="ionlink">
+                                            <Link to={row.href} className="ionLink">
                                                 {this.overlayTooltipMenu(row)}
                                             </Link>
                                             {this.renderSubmenu(row)}

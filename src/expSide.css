@@ -2,16 +2,22 @@
     background: #282c34;
     transition: all .1s linear;
 }
-.ionlink{
+.ionLink{
     font-size: 18px;
     color: snow;
     text-decoration: none;
-
 }
-.ionContainer{
+/*
+стиль контейнера меню
+ */
+.ionContainer >li{
     padding-left: 10px;
+    margin-top: 10px;
 
 }
+/**
+стиль коневой картинки
+ */
 .ionImageMenu{
     background: rgba(71, 71, 68, 0.95); /* Цвет фона */
     border: 2px solid black; /* Параметры рамки */
@@ -20,7 +26,10 @@
     margin: 3px;
     border-radius: 5px;
 }
-.ionImageSubMeny{
+/**
+Стиль картинки субменю
+ */
+.ionImageSubMenu{
     background: inherit; /* Цвет фона */
     border: 2px solid inherit; /* Параметры рамки */
     padding-left: 3px; /* Поля вокруг текста */
@@ -30,18 +39,16 @@
     border-radius: 5px;
 
 }
-
-.vertical-align-center {
-    display: table;
-    height: 100%;
-    width: 100%;
+/**
+Стиль корневого меню не выбранного
+ */
+.defaultMenu{
+    padding-left: 7px;
+    margin-top: 15px;
 }
-.vertical-align-center  .valign-center {
-    display: table-cell;
-    vertical-align: middle;
-    height: 100%;
-}
-
+/**
+Стиль корневого менб выбранного
+ */
 .selectMenu{
     background: #5f5f5a;
     padding-left: 7px;
@@ -49,35 +56,42 @@
     color: yellow;
 
 }
-.defaultMenu{
-    padding-left: 7px;
-    margin-top: 15px;
+
+/**
+стиль субменю не выбранное
+ */
+.defaultSubMenu{
+ font-size: 15px;
+}
+/**
+Стиль заголовка
+ */
+.ionSideHead{
+
 }
 
+/**
+стиль субменю выбранное
+ */
 .selectSubMenu{
     background: #5f5f5a;
+    font-size: 15px;
 
 }
-#ionSideHead{
-    height: 100px;
-
-    color: white;
-
-}
-#ionHeadText{
-    color: wheat;
-}
-.ionMenuText{
-    color: wheat;
-}
-.ionLink{
-    color: wheat;
-    text-decoration: inherit;
+/**
+Стиль иконки закрытия-открытия
+ */
+.toggleOpen{
+    position: fixed;
+    left: 0px;
+    bottom:0px;
 }
 
-.submenuitem{
-    margin-top: 10px;
-}
+
+
+
+
+
 
 #menu ul, #menu li {
      padding: 0;
@@ -87,9 +101,4 @@
 .container-fluid {
     padding: 0px;
     overflow: hidden;
-}
-.toggleOpen{
-    position: fixed;
-    left: 0px;
-    bottom:0px;
 }
