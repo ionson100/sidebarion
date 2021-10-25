@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 import Dispatcher from "../utils/Dispetcher";
 import {v4 as uuidv4} from "uuid";
+import { BsCaretRight,BsCaretDown } from "react-icons/bs";
 
 
 export default class WrapperSideBar {
@@ -31,6 +32,9 @@ export default class WrapperSideBar {
         this.closeWidth=100;
         this.selectBackground="red"
         this.isOpen=true;
+        this.imageToggleSubMenu1=<BsCaretRight color="#00cc00"/>
+        this.imageToggleSubMenu2=<BsCaretDown color="#00cc00"/>
+
     }
 
     set openWidth(value){
@@ -66,6 +70,7 @@ export default class WrapperSideBar {
         this.imageMode=null;
         this.imageAlt=".."
         this.tooltip=undefined
+
 
     }
 

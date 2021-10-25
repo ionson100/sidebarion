@@ -14,6 +14,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 
+
+
 class SideBarion extends PureComponent{
     constructor(props) {
         super(props);
@@ -98,6 +100,22 @@ class SideBarion extends PureComponent{
                 );
             }
         }
+    }
+    refreshImageToggleMenu(row){
+        if(this.state.barData.imageToggleSubMenu1&&
+            this.state.barData.imageToggleSubMenu1&&
+            row.menuItems.length>0&&
+            this.state.barData.isOpen){
+            return (
+                (
+
+                    <div className="col-md-auto ionImageToggle " >
+                      {row._isVisibleSubmenu===false?this.state.barData.imageToggleSubMenu1:this.state.barData.imageToggleSubMenu2}
+                    </div>
+                  )
+            );
+        }
+
     }
 
     refreshContent(row){
@@ -233,6 +251,8 @@ class SideBarion extends PureComponent{
                 <div className="col align-self-center"  style={{display:this.getDisplay(null)}}>
                     {this.refreshContent(row)}
                 </div>
+                {this.refreshImageToggleMenu(row)}
+
             </div>
         );
 
