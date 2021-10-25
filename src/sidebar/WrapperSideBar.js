@@ -1,7 +1,7 @@
 import App from "./example";
 import ReactDOM from "react-dom";
 import React from "react";
-import Dispatcher from "../Dispetcher";
+import Dispatcher from "../utils/Dispetcher";
 import {v4 as uuidv4} from "uuid";
 
 
@@ -44,12 +44,14 @@ export default class WrapperSideBar {
         this.dispatch("render",{})
     }
 }
+
  class Head {
     constructor(content="myApp",isShow=true) {
         this.content=content;
         this.isShow=isShow;
     }
 }
+
  class MenuItem {
     constructor() {
         this.id=uuidv4();
