@@ -2,159 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
-import WrapperSideBar, {BarData,Head,MenuItem} from "./sidebar/WrapperSideBar";
-import { FaAddressCard,FaAddressBook,FaStar,FaRoute} from 'react-icons/fa';
+import WrapperSideBar, {MenuItem} from "./sidebar/WrapperSideBar";
+import { FaRoute} from 'react-icons/fa';
+import {barData,imgSize} from "./TestProps"
 
 
 
-
-const barData=new BarData();
-barData.head=new Head("Просто приложение",true)
-{
-    const mymenu=new MenuItem();
-    mymenu.content="Просто1"
-    mymenu.isShow=true;
-    mymenu.href="Просто1";
-    mymenu.imageSrc=<FaAddressBook/>
-    mymenu.imageSize=23;
-    barData.menuItems.push(mymenu);
-}
-{
-    const mymenu=new MenuItem();
-    mymenu.content= "Моя первая кнопка Моя первая кнопка Моя первая кнопка"
-    mymenu.isShow=true;
-    mymenu.href="Просто2";
-    mymenu.imageSrc=<FaStar/>
-    mymenu.imageSize=23;
-    mymenu.tooltip="Прстое меню Моя первая кнопка"
-    barData.menuItems.push(mymenu);
-    {
-        const mi=new MenuItem();
-        mi.content="wwww1";
-        mi.href="/wwww1"
-        mi.imageSize=20;
-        mi.imageSrc="./images/image1.svg"
-
-        mymenu.menuItems.push(mi);
-    }
-    {
-        const mi=new MenuItem();
-        mi.content="wwww2";
-        mi.href="/wwww2"
-        mi.imageSize=20;
-        mi.imageSrc="./images/image1.svg"
-        mymenu.menuItems.push(mi);
-    }
-    {
-        const mi=new MenuItem();
-        mi.content="wwww3";
-        mi.href="/wwww3"
-        mi.imageSize=20;
-        mi.imageSrc="./images/image1.svg"
-
-        mymenu.menuItems.push(mi);
-    }
-}
-{
-    const mymenu=new MenuItem();
-    mymenu.content="Просто3"
-    mymenu.isShow=true;
-    mymenu.imageSrc="./images/image1.svg"
-    mymenu.imageSize=23;
-    mymenu.href="Просто3";
-    {
-        const mi=new MenuItem();
-        mi.content="wwww1";
-        mi.href="/wwww1"
-        mi.imageSize=20;
-        mi.imageSrc="./images/image1.svg"
-        mymenu.menuItems.push(mi);
-    }
-    {
-        const mi=new MenuItem();
-        mi.content="wwww2";
-        mi.href="/wwww2"
-        mi.imageSize=20;
-        mi.imageSrc="./images/image1.svg"
-        mymenu.menuItems.push(mi);
-    }
-
-
-    {
-        const mi=new MenuItem();
-        mi.content="wwww3";
-        mi.href="/wwww3"
-        mi.imageSize=20;
-        mi.imageSrc=<FaAddressCard/>
-
-        mymenu.menuItems.push(mi);
-
-    }
-    {
-        const mi=new MenuItem();
-        mi.content="Маршрут:";
-        mi.href="/wwww1"
-        mi.imageSize=20;
-        mi.imageSrc=<FaRoute color="red" size={20}/>
-        mymenu.menuItems.push(mi);
-    }
-    {
-        const mi=new MenuItem();
-        mi.content="wwww2";
-        mi.href="/wwww2"
-        mi.imageSize=20;
-        mi.imageSrc="./images/image1.svg"
-        mymenu.menuItems.push(mi);
-    }
-
-    {
-        const mi=new MenuItem();
-        mi.content="wwww3";
-        mi.href="/wwww3"
-        mi.imageSize=20;
-        mi.imageSrc=<FaAddressCard/>
-
-        mymenu.menuItems.push(mi);
-
-    }
-    {
-        const mi=new MenuItem();
-        mi.content="wwww1";
-        mi.href="/wwww1"
-        mi.imageSize=20;
-        mi.imageSrc="./images/image1.svg"
-        mymenu.menuItems.push(mi);
-    }
-    {
-        const mi=new MenuItem();
-        mi.content="wwww2";
-        mi.href="/wwww2"
-        mi.imageSize=20;
-        mi.imageSrc="./images/image1.svg"
-        mymenu.menuItems.push(mi);
-    }
-    {
-        const mi=new MenuItem();
-        mi.content="wwww3";
-        mi.href="/wwww3"
-        mi.imageSize=20;
-        mi.imageSrc=<FaAddressCard/>
-
-        mymenu.menuItems.push(mi);
-
-    }
-    barData.menuItems.push(mymenu);
-}
 
 
 const cont = {
     name: "not selected"
-
 };
 
 barData.on("onclick",(menuitem)=>{
     cont.name=menuitem.href;
     initContent(cont)
+    //menuitem.isShow=false;
+    //barData.forceUpdate();
 })
 
 function  initContent(props){
@@ -174,8 +38,16 @@ d.onclick=function (){
         const mi=new MenuItem();
         mi.content="Test-22";
         mi.href="/test22"
-        mi.imageSize=20;
-        mi.imageSrc=<FaRoute color="green"></FaRoute>
+        mi.imageSize=10;
+        mi.imageSrc=<FaRoute size={imgSize} color="green"/>
+        {
+            const mi1=new MenuItem();
+            mi1.content="Test-22";
+            mi1.href="/test22"
+            mi1.imageSize=20;
+            mi1.imageSrc=<FaRoute size={imgSize} color="green"/>;
+            mi.menuItems.push(mi1);
+        }
         barData.menuItems[1].menuItems.push(mi)
     }
 
@@ -184,12 +56,7 @@ d.onclick=function (){
 const d2=document.getElementById('bt2');
 const st={click:true}
 d2.onclick=()=>{
-    if(st.click){
-        barData.openWidth=0;
-
-    }else{
-        barData.openWidth=300;
-    }
+    barData.openWidth = st.click ? 0 : 300;
     st.click=!st.click;
     barData.forceUpdate()
 };
@@ -203,11 +70,14 @@ d3.onclick=function (){
 
 
 
-barData.closeWidth=70;
-barData.openWidth=300;
-barData.isOpen=true;
-const wrap=new WrapperSideBar(barData,"root");
-wrap.init()
+barData.closeWidth=70;// ширина зарытого
+barData.openWidth=400;// ширина открытого
+barData.isOpen=true;  // состояние  - открыто
+/**
+ * создаем меню
+ */
+new WrapperSideBar(barData,"root");
+
 initContent(cont)
 
 reportWebVitals();

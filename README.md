@@ -1,70 +1,145 @@
-# Getting Started with Create React App
+# Динамическое меню
+Проект для audio.
+Динамическое меню на React, bootstrap5
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Магия, меню работает на основе объекта модели BarData, только с ним
+``````
+ class BarData extends Dispatcher{
+    constructor() {
+        super();
+        this.head=new Head();
+        /**
+         * элементы меню тип: MenuItem
+         * @type {*[]}
+         */
+        this.menuItems=[]
+        this._openWidth=300;
+        this._currentWidth=300
+        /**
+         * Ширина меню в закрытом сотоянии
+         * @type {number}
+         */
+        this.closeWidth=100;
+        /**
+         * Состояние открытости меню
+         * @type {boolean}
+         */
+        this.isOpen=true;
+        /**
+         * иконка состояния открытости ноды меню ...1- закрыта, ...2- открыта
+         * может принимать только React элемент (IconType)
+         * @type {JSX.Element}
+         */
+        this.imageToggleNode1=<BsCaretRight color="#00cc00"/>
+        this.imageToggleNode2=<BsCaretDown color="#00cc00"/>
 
-## Available Scripts
+    }
 
-In the project directory, you can run:
+     /**
+      * установка ширины открытого меню
+      * @param value
+      */
+    set openWidth(value){
+        this._openWidth=value;
+        this._currentWidth=value;
+    }
+    get openWidth(){
+        return this._openWidth;
+    }
 
-### `npm start`
+     /**
+      * Обновление меню снаружи
+      */
+    forceUpdate(){
+        this.dispatch("render",{})
+    }
+}
+``````
+Меню может содержать подменю, с неограниченной вложенностью (в пределах разумного)
+объект меню содержит поля:
+``````
+/**
+ * Элемент меню
+ */
+ class MenuItem {
+    constructor() {
+        /**
+         * Идентификатор меню, уникальность по умолчанию uuid,
+         * можно назначать от пользователя
+         * @type {*}
+         */
+        this.id=uuidv4();
+        /**
+         * содержание меню, может быть строкой или react элементом
+         * @type {string}
+         */
+        this.content="mymenu";
+        /**
+         * управление показом меню
+         * @type {boolean}
+         */
+        this.isShow=true;
+        /**
+         * Маршрут ссылки меню
+         * @type {string}
+         */
+        this.href="/#";
+        /**
+         * список субменю {MenuItem}
+         * @type {*[]}
+         */
+        this.menuItems=[];
+        /**
+         * маркер выбора меню
+         * @type {boolean} true выбрано
+         * @private
+         */
+        this._isSelect=false;
+        /**
+         * маркер управления открыванием субменю
+         * @type {boolean}
+         * @private
+         */
+        this._isVisibleSubmenu=false;
+        /**
+         * размер иконки меню, применяется если иконка из статических фалйов
+         * @type {number}
+         */
+        this.imageSize=30;
+        /**
+         * url статического файла иконки или React элемент
+         * @type {null}
+         */
+        this.imageSrc=null;
+        this.imageMode=null;
+        this.imageAlt=".."
+        /**
+         * Подстказка меню, применяется только при свернутом меню
+         * @type {undefined}
+         */
+        this.tooltip=undefined
+    }
+}
+``````
+запуск - инициализация:
+``````
+import {BarData, Head, MenuItem} from "./sidebar/WrapperSideBar";
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+const barData= new BarData()l
+..
+..
+new WrapperSideBar(barData,"root");
+``````
+подписка на события клика:
+`````
+barData.on("onclick",(menuitem)=>{
+   console.log(menuitem)
+    //menuitem.isShow=false; меняем свойство меню
+    //barData.forceUpdate(); рефрешим показ
+})
+`````
+Если будешь менять модель меню, не убивай струю, просто если насытишься новой, можешь
+обратно использовать старую, тогда можно подписаться и лямбдой.
+Проблемы, посмотри стилизацию статическую меню, срывает его при уменьшении размеров окна.
+webstorm без бекенда как обычно: npm install
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

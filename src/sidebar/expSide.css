@@ -1,6 +1,7 @@
 .ionMenu{
     background: #282c34;
     transition: all .1s linear;
+
 }
 .ionLink{
     font-size: 18px;
@@ -105,11 +106,14 @@
 
 
 
+#menu ul{
+    padding: 0;
+    padding-left: 10px; /*отступ слева - корневой элемент*/
+}
 
-
-#menu ul, #menu li {
+#menu li {
      padding: 0;
-    padding-left: 10px;
+    padding-left: 30px; /*отступ слева субменю от родителя*/
 }
 
 .container-fluid {
