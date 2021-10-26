@@ -1,17 +1,21 @@
 .ionMenu{
     background: #282c34;
     transition: all .1s linear;
-
+    padding: 20px 14px;
+    overflow-x: hidden;
+    height: 100%;
 }
+
 .ionLink{
     font-size: 18px;
     color: snow;
     text-decoration: none;
 }
+
 .ionLink:hover{
     color: yellow;
-
 }
+
 /*
 стиль контейнера меню
  */
@@ -98,8 +102,8 @@
  */
 .toggleOpen{
     position: fixed;
-    left: 0px;
-    bottom:0px;
+    left: 17px;
+    bottom: 6px;
 }
 
 

@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import WrapperSideBar, {MenuItem} from "./sidebar/WrapperSideBar";
 import { FaRoute} from 'react-icons/fa';
 import {barData,imgSize} from "./TestProps"
-
+import './index.css';
 
 
 
@@ -24,7 +24,7 @@ barData.on("onclick",(menuitem)=>{
 function  initContent(props){
     const element = (
         <div>
-            <h2>{props.name}</h2>
+            <h2 className="myClassName">{props.name}</h2>
         </div>
     );
     ReactDOM.render(element, document.getElementById('content'));
