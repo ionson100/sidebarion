@@ -12,11 +12,6 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import {PureComponent} from "react";
 import { v4 as uuidv4 } from 'uuid';
 
-
-
-
-
-
 class SideBarion extends PureComponent{
     constructor(props) {
         super(props);
@@ -49,7 +44,6 @@ class SideBarion extends PureComponent{
          */
         this.isRender=false;
 
-
     }
 
     get barData(){
@@ -65,6 +59,14 @@ class SideBarion extends PureComponent{
             this._createMap(this.barData.menuItems)
             this.forceUpdate();
         })
+        window.addEventListener('resize', (e) => {
+            if(document.body.clientWidth < 770 && this.state.barData.isOpen) {
+                this.toggleMenu();
+            }
+            else if(document.body.clientWidth > 770 && !this.state.barData.isOpen) {
+                this.toggleMenu();
+            }
+        }, true);
     }
 
     /**
@@ -182,15 +184,12 @@ class SideBarion extends PureComponent{
         }
     }
 
-
-
-
     renderSubmenu(menuItem){
         if(menuItem.menuItems.length>0){
 
             return(
 
-                <ul  className=" flex" style={{display:this.getDisplay(menuItem)}}>
+                <ul className="flex" style={{display:this.getDisplay(menuItem)}}>
                     {menuItem.menuItems.map((row,i)=>{
                         return(
                             <li key={row.id} className="container  ionContainer " style={{display:row.isShow===true?"block":"none"}}>
@@ -265,7 +264,7 @@ class SideBarion extends PureComponent{
      */
     toggleMenu(){
 
-        if(this.state.barData.isOpen===true){
+        if(this.state.barData.isOpen){
 
             this.setState(prevState => {
                 let proxy = Object.assign({}, prevState);
@@ -343,33 +342,39 @@ class SideBarion extends PureComponent{
         return(
             <Router>
 
-            <div className="container-fluid overflow-hidden  p-0" id="menu">
-                <div className="row vh-100 overflow-auto  p-0">
-                    <div className=" col-auto  d-flex   ionMenu" style={{width:this.barData._currentWidth}}>
-                        <div className="d-flex flex-md-column ">
-                            <div className="ionSideHead" style={{display:this.getDisplay(null)}}>
-                                <span id="ionSideHeadText">{this.barData?.head?.content??"None"}</span>
-                            </div>
-                            <ul  className="nav"     >
-                                {this.barData.menuItems.map((row,i)=>{
-                                    return (
-                                        <li key={row.id} className="container  ionContainer p-0 menuitem" style={{display:row.isShow===true?"block":"none"}} >
-                                            <Link to={row.href} className="ionLink">
-                                                {this.overlayTooltipMenu(row)}
-                                            </Link>
-                                            {this.renderSubmenu(row)}
-                                        </li>
-                                    );
-                                })}
-                            </ul>
-                            <div className=" py-sm-0 mt-sm-auto ms-auto ms-sm-0  p-0">
-                                  <FiAlignJustify color="#a5a89d" size={30} className="toggleOpen" style={{display:this.getDispalyToogleOpen()}} onClick={this.toggleMenu.bind(this)}/>
-                            </div>
+                    <div id="menu" className="menu">
+                        <div className="ionMenu" style={{width: this.barData._currentWidth}}>
+
+                                <div className="ionSideHead" style={{display:this.getDisplay(null)}}>
+                                    <span id="ionSideHeadText">{this.barData?.head?.content??"None"}</span>
+                                </div>
+                                <ul className="nav">
+                                    {this.barData.menuItems.map((row,i)=>{
+                                        return (
+                                            <li key={row.id} className="container  ionContainer p-0 menuitem" style={{display:row.isShow===true?"block":"none"}} >
+                                                <Link to={row.href} className="ionLink">
+                                                    {this.overlayTooltipMenu(row)}
+                                                </Link>
+                                                {this.renderSubmenu(row)}
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+
                         </div>
+
                     </div>
 
+
+                <div className="hamburger">
+                    <FiAlignJustify
+                        color="#a5a89d"
+                        size={30}
+                        className="toggleOpen"
+                        style={{display:this.getDispalyToogleOpen()}}
+                        onClick={this.toggleMenu.bind(this)}
+                    />
                 </div>
-            </div>
 
             </Router>
         );
