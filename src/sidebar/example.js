@@ -32,7 +32,7 @@ class SideBarion extends PureComponent{
         /**
          * первоначально выстраиваем словарь нодов
          */
-        this._createMap(this.props.barData.menuItems)
+        this._createMap(this.barData.menuItems)
         /**
          * Последнее нажатое меню
          * @type {{id: undefined}}
@@ -43,6 +43,8 @@ class SideBarion extends PureComponent{
          * @type {boolean}
          */
         this.isRender=false;
+
+        this.ref1=React.createRef();
 
     }
 
@@ -59,11 +61,11 @@ class SideBarion extends PureComponent{
             this._createMap(this.barData.menuItems)
             this.forceUpdate();
         })
-        window.addEventListener('resize', (e) => {
-            if(document.body.clientWidth < 770 && this.state.barData.isOpen) {
+        window.addEventListener('resize', () => {
+            if(document.body.clientWidth < 770 && this.barData.isOpen) {
                 this.toggleMenu();
             }
-            else if(document.body.clientWidth > 770 && !this.state.barData.isOpen) {
+            else if(document.body.clientWidth > 770 && !this.barData.isOpen) {
                 this.toggleMenu();
             }
         }, true);
@@ -109,7 +111,7 @@ class SideBarion extends PureComponent{
 
         const  d=this.mapMenu.get(uuid);// получаем объект меню  из словаря
         if(d){
-            this.mapMenu.forEach((v,k)=>{
+            this.mapMenu.forEach((v)=>{
                 v._isSelect=false; // снимаем выделение со всех нодов
             })
             d._isSelect=true; // выделяем нажатый нод
@@ -159,7 +161,7 @@ class SideBarion extends PureComponent{
         if(this.barData.imageToggleNode1&&
             this.barData.imageToggleNode2&&
             row.menuItems.length>0&&
-            this.state.barData.isOpen){// если пользователь задал иконки, у меню есть субменю,если меню не свернуто
+            this.barData.isOpen){// если пользователь задал иконки, у меню есть субменю,если меню не свернуто
             return (
                 (
 
@@ -190,12 +192,12 @@ class SideBarion extends PureComponent{
             return(
 
                 <ul className="flex" style={{display:this.getDisplay(menuItem)}}>
-                    {menuItem.menuItems.map((row,i)=>{
+                    {menuItem.menuItems.map((row)=>{
                         return(
                             <li key={row.id} className="container  ionContainer " style={{display:row.isShow===true?"block":"none"}}>
 
                                 <Link to={row.href} className="ionLink">
-                                    <div className={this.getClassNameSubMenuItem(row)} id={row.id} onClick={(event)=>{this.clickItem(row.id)}}>
+                                    <div className={this.getClassNameSubMenuItem(row)} id={row.id} onClick={()=>{this.clickItem(row.id)}}>
                                         {this.refreshImage(row)}
                                         <div className="col align-self-center">
                                             {this.refreshContent(row)}
@@ -244,7 +246,7 @@ class SideBarion extends PureComponent{
 
     getDisplay(row){
 
-        if(this.state.barData.isOpen){
+        if(this.barData.isOpen){
             if(row){
                if(row._isVisibleSubmenu===true){
                    return "block";
@@ -264,7 +266,7 @@ class SideBarion extends PureComponent{
      */
     toggleMenu(){
 
-        if(this.state.barData.isOpen){
+        if(this.barData.isOpen){
 
             this.setState(prevState => {
                 let proxy = Object.assign({}, prevState);
@@ -311,7 +313,7 @@ class SideBarion extends PureComponent{
             return (
                 <OverlayTrigger  placement="right-end" overlay={<Tooltip id={row.id}>{row.tooltip}</Tooltip>}>
                   <div className={this.getClassNameMenuItem(row)}  id={row.id}
-                      onClick={(event)=>{this.clickItem(row.id)}}>
+                      onClick={()=>{this.clickItem(row.id)}}>
                       {this.refreshImage(row)}
                       <div className="col align-self-center"  style={{display:this.getDisplay(null)}}>
                         {this.refreshContent(row)}
@@ -322,7 +324,7 @@ class SideBarion extends PureComponent{
         }
         return (
             <div className={this.getClassNameMenuItem(row)}  id={row.id}
-                 onClick={(event)=>{this.clickItem(row.id)}}>
+                 onClick={()=>{this.clickItem(row.id)}}>
                 {this.refreshImage(row)}
                 <div className="col align-self-center"  style={{display:this.getDisplay(null)}}>
                     {this.refreshContent(row)}
@@ -334,6 +336,36 @@ class SideBarion extends PureComponent{
 
     }
 
+    handler = ((e) => {
+        if(!e.target.getAttribute("data-ismove")) return;
+        const self=this;
+        function onMouseMove(e) {
+            self.barData._currentWidth=self.barData._currentWidth+e.movementX;
+            self.ref1.current.style.width = `${self.barData._currentWidth}px`
+            if(self.barData.closeWidth>0){
+                // если минимальная ширина меню задана то можно поиграться ей, при регулировании  ширины вручную
+                if(self.barData.isOpen===true&&self.barData._currentWidth<=self.barData.closeWidth*2){
+                    // если при уменьшении уж слишком уменьшили, убираем все итемы
+                    self.barData.isOpen=false
+                    self.forceUpdate();
+                }
+                if(self.barData.isOpen===false&&self.barData._currentWidth>=self.barData.closeWidth*4){
+                    self.barData.isOpen=true
+                    self.forceUpdate();
+                }
+            }
+
+
+        }
+        function onMouseUp() {
+            // отключаем обработчики мышки, отпускания клавиши мышки
+            document.removeEventListener("mousemove", onMouseMove);
+            document.removeEventListener("mouseup", onMouseUp);
+        }
+        // подключаем обработчики события мышки
+        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("mouseup", onMouseUp);
+    });
     /**
      * рендериг корневого меню
      * @returns {JSX.Element}
@@ -341,15 +373,16 @@ class SideBarion extends PureComponent{
     render() {
         return(
             <Router>
-
-                    <div id="menu" className="menu">
-                        <div className="ionMenu" style={{width: this.barData._currentWidth}}>
+                <div data-ismove="1" className="movediv"  style={{background:"inherit",paddingRight:"0px",cursor:"e-resize"}}
+                     onMouseDown={this.handler.bind(this)}>
+                    <div id="menu " className="menu" style={{cursor:"default"}}  onMouseDown={()=>{return false}}>
+                        <div ref={this.ref1} className="ionMenu vh-100" style={{width: this.barData._currentWidth}}>
 
                                 <div className="ionSideHead" style={{display:this.getDisplay(null)}}>
                                     <span id="ionSideHeadText">{this.barData?.head?.content??"None"}</span>
                                 </div>
                                 <ul className="nav">
-                                    {this.barData.menuItems.map((row,i)=>{
+                                    {this.barData.menuItems.map((row)=>{
                                         return (
                                             <li key={row.id} className="container  ionContainer p-0 menuitem" style={{display:row.isShow===true?"block":"none"}} >
                                                 <Link to={row.href} className="ionLink">
@@ -366,14 +399,16 @@ class SideBarion extends PureComponent{
                     </div>
 
 
-                <div className="hamburger">
+                <div className="hamburger" style={{cursor:"pointer"}}>
                     <FiAlignJustify
+
                         color="#a5a89d"
                         size={30}
                         className="toggleOpen"
                         style={{display:this.getDispalyToogleOpen()}}
                         onClick={this.toggleMenu.bind(this)}
                     />
+                </div>
                 </div>
 
             </Router>
