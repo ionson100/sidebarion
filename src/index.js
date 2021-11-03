@@ -70,8 +70,8 @@ d3.onclick=function (){
 
 
 
-barData.closeWidth=70;// ширина зарытого
-barData.openWidth=400;// ширина открытого
+barData.closeWidth=60;// ширина зарытого
+barData.openWidth=700;// ширина открытого
 barData.isOpen=true;  // состояние  - открыто
 /**
  * создаем меню
