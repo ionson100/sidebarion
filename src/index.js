@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 import WrapperSideBar, {MenuItem} from "./sidebar/WrapperSideBar";
-import { FaRoute} from 'react-icons/fa';
-import {barData,imgSize} from "./TestProps"
+//import { FaRoute} from 'react-icons/fa';,imgSize
+import {barData,imgSizeSm,colorImage} from "./TestTree"
 import './index.css';
 
-
+import { BiFolder,BiFolderOpen} from "react-icons/bi";
 
 
 const cont = {
@@ -16,6 +16,12 @@ const cont = {
 
 barData.on("onclick",(menuitem)=>{
     cont.name=menuitem.href;
+    const state = { 'page_id': 1, 'user_id': 5 }
+    const title = ''
+
+
+
+    window.history.replaceState(state, title, menuitem.href)
     initContent(cont)
     //menuitem.isShow=false;
     //barData.forceUpdate();
@@ -30,6 +36,10 @@ function  initContent(props){
     ReactDOM.render(element, document.getElementById('content'));
 }
 
+window.onpopstate = function(event) {
+    alert(`location: ${document.location}, state: ${JSON.stringify(event.state)}`)
+}
+
 
 
 const d=document.getElementById('bt1');
@@ -39,13 +49,15 @@ d.onclick=function (){
         mi.content="Test-22";
         mi.href="/test22"
         mi.imageSize=10;
-        mi.imageSrc=<FaRoute size={imgSize} color="green"/>
+        mi.imageSrc=<BiFolder size={imgSizeSm} color={colorImage}/>
+        mi.imageSrcOpen=<BiFolderOpen size={imgSizeSm} color={colorImage}/>
         {
             const mi1=new MenuItem();
             mi1.content="Test-22";
             mi1.href="/test22"
             mi1.imageSize=20;
-            mi1.imageSrc=<FaRoute size={imgSize} color="green"/>;
+            mi1.imageSrc=<BiFolder size={imgSizeSm} color={colorImage}/>;
+            mi.imageSrcOpen=<BiFolderOpen size={imgSizeSm} color={colorImage}/>
             mi.menuItems.push(mi1);
         }
         barData.menuItems[1].menuItems.push(mi)

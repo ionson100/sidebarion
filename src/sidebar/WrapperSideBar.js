@@ -1,9 +1,9 @@
-import App from "./example";
+import App from "./index";
 import ReactDOM from "react-dom";
 import React from "react";
-import Dispatcher from "../utils/Dispetcher";
+import Dispatcher from "./Dispetcher";
 import {v4 as uuidv4} from "uuid";
-import { BsCaretRight,BsCaretDown } from "react-icons/bs";
+
 
 
 
@@ -35,6 +35,16 @@ export default class WrapperSideBar {
         this._openWidth=300;
         this._currentWidth=300
         /**
+         * иконка для трее, строка или jsx
+         * @type {string|JSX.Element}
+         */
+        this.iconTree=undefined
+        /**
+         * Размер иконки открытой tree, для статических файлов
+         * @type {number}
+         */
+        this.iconTreeSize=20;
+        /**
          * Ширина меню в закрытом сотоянии
          * @type {number}
          */
@@ -49,8 +59,15 @@ export default class WrapperSideBar {
          * может принимать только React элемент (IconType)
          * @type {JSX.Element}
          */
-        this.imageToggleNode1=<BsCaretRight color="#00cc00"/>
-        this.imageToggleNode2=<BsCaretDown color="#00cc00"/>
+        this.imageToggleNode1=undefined
+        this.imageToggleNode2=undefined
+        /**
+         * Иконка кнопки управления состоянием бокового меню
+         * @type {string|JSX.Element}
+         */
+        this.iconToggleMenu=undefined
+
+
 
     }
 
@@ -148,10 +165,16 @@ export default class WrapperSideBar {
         this.imageMode=null;
         this.imageAlt=".."
         /**
-         * Подстказка меню, применяется только при свернутом меню
-         * @type {undefined}
+         * Подсказка меню, применяется только при свернутом меню, строка или элемент React
+         * @type {string|jsx}
          */
         this.tooltip=undefined
+
+        /**
+         *  url статического файла иконки или React элемент, картинка открытого блока, как в трее
+         * @type {string|jsx}
+         */
+        this.imageSrcOpen=null;
     }
 }
 

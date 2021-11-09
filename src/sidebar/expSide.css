@@ -1,7 +1,29 @@
+:root{
+    --background-menu: #f5f7fa;
+    --hover-menu: #deded5;
+    --color-font: #6d6d68;
+    --color-font-select: #090908;
+    --color-font-hover: #068106
+
+}
+
+
+/*.menu ul {*/
+/*    padding-left: 0rem;*/
+/*    list-style-type: none;*/
+/*}*/
+
+/*.menu ul li {*/
+/*    padding-left: 0rem;*/
+
+/*    background-position: 0 0;*/
+/*    background-size: 1.6rem 1.6rem;*/
+/*    background-repeat: no-repeat;*/
+/*}*/
 .ionMenu{
-    background: #282c34;
+    background: var(--background-menu);
     transition: all .1s linear;
-    padding: 20px 14px;
+    padding: 0px 14px;
     overflow-x: hidden;
     height: 100%;
     -ms-overflow-style: none;
@@ -11,20 +33,20 @@
 
 .ionLink{
     font-size: 18px;
-    color: snow;
+    color: var(--color-font);
     text-decoration: none;
 }
 
 .ionLink:hover{
-    color: yellow;
+    color: var(--color-font-select);
 }
 
 /*
 стиль контейнера меню
  */
-.ionContainer >li{
+.ionContainer li{
     padding-left: 10px;
-    margin-top: 10px;
+    margin-top: 0px;
 
 }
 /**
@@ -55,20 +77,20 @@
 Стиль корневого меню не выбранного
  */
 .defaultMenu{
-    padding-left: 7px;
-    margin-top: 15px;
+    padding-left: 20px;
+    margin-top: 0px;
 }
 .defaultMenu:hover{
-    background: #5f5f5a;
+    background: var(--hover-menu);
 }
 /**
-Стиль корневого менб выбранного
+Стиль корневого меню выбранного
  */
 .selectMenu{
-    background: #5f5f5a;
-    padding-left: 7px;
-    margin-top: 15px;
-    color: yellow;
+    background: var(--hover-menu);
+    padding-left: 20px;
+    margin-top: 0px;
+    color: var(--color-font-hover);
 
 }
 
@@ -76,10 +98,27 @@
 стиль субменю не выбранное
  */
 .defaultSubMenu{
+    position: relative;
+    margin-left: 0px;
  font-size: 15px;
+    padding-left: 3px;
+}
+
+/**
+стиль субменю выбранное
+ */
+.selectSubMenu{
+
+    position: relative;
+    background: var(--hover-menu);
+    font-size: 15px;
+    color: var(--color-font-hover);
+    margin-left: 0px;
+    padding-left: 3px;
+
 }
 .defaultSubMenu:hover{
-    background: #5f5f5a;
+    background: var(--hover-menu);
 }
 /**
 Стиль заголовка
@@ -91,15 +130,7 @@
     width: 100%;
 }
 
-/**
-стиль субменю выбранное
- */
-.selectSubMenu{
-    background: #5f5f5a;
-    font-size: 15px;
-    color: yellow;
 
-}
 /**
 Стиль иконки закрытия-открытия
  */
@@ -113,15 +144,16 @@
 
 
 
-#menu ul{
-    padding: 0;
-    padding-left: 10px; /*отступ слева - корневой элемент*/
-}
+/*#menu ul{*/
+/*    padding: 0;*/
+/*    padding-left: 10px; !*отступ слева - корневой элемент*!*/
+/*}*/
 
-#menu li {
-     padding: 0;
-    padding-left: 30px; /*отступ слева субменю от родителя*/
-}
+/*#menu li {*/
+
+/*     padding: 0;*/
+/*    padding-left: 110px; !*отступ слева субменю от родителя*!*/
+/*}*/
 
 .container-fluid {
     padding: 0;
@@ -141,5 +173,13 @@ padding-right: 15px;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+}
+.treePreImage{
+position: absolute;
+
+    left: -40px;
+    top:0px;
+    z-index: 10000;
 
 }
