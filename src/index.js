@@ -4,11 +4,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 import WrapperSideBar, {MenuItem} from "./sidebar/WrapperSideBar";
 //import { FaRoute} from 'react-icons/fa';,imgSize
-import {barData,imgSizeSm,colorImage} from "./TestTree"
+//import {barData,imgSizeSm,colorImage} from "./TestTree"
+import {barData,imgSizeSm,colorImage} from "./TestMenu"
 import './index.css';
 
 import { BiFolder,BiFolderOpen} from "react-icons/bi";
-import "./sidebar/expSide.css"
+//import "./sidebar/expSide.css"
+import "./testMenu.css"
 
 
 const cont = {
@@ -83,9 +85,15 @@ d3.onclick=function (){
 
 
 
+// barData.closeWidth=60;// ширина зарытого
+// barData.openWidth=700;// ширина открытого
+// barData.isOpen=true;  // состояние  - открыто
+
+
 barData.closeWidth=60;// ширина зарытого
-barData.openWidth=700;// ширина открытого
+barData.openWidth=280;// ширина открытого
 barData.isOpen=true;  // состояние  - открыто
+
 /**
  * создаем меню
  */

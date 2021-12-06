@@ -134,32 +134,7 @@ barData.head=new Head(myHeader())
         mymenu.menuItems.push(mi);
 
     }
-    {
-        const mi=new MenuItem();
-        mi.content="My Route 4";
-        mi.href="/wwww21"
-        mi.imageSize=imgSize;
-        mi.imageSrc=<BiFolder  color={colorImage} size={imgSizeSm}/>
-        mymenu.menuItems.push(mi);
-    }
-    {
-        const mi=new MenuItem();
-        mi.content="Content 56";
-        mi.href="/wwww22"
-        mi.imageSize=imgSize;
-        mi.imageSrc=<BiFolder  color={colorImage} size={imgSizeSm}/>
-        mymenu.menuItems.push(mi);
-    }
-    {
-        const mi=new MenuItem();
-        mi.content="Content 55";
-        mi.href="/wwww23"
-        mi.imageSize=10;
-        mi.imageSrc=<BiFolder color={colorImage} size={imgSizeSm} />
 
-        mymenu.menuItems.push(mi);
-
-    }
     barData.menuItems.push(mymenu);
 }
 

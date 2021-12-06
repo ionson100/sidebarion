@@ -1,8 +1,13 @@
 # Динамическое меню
 Проект для audio.
-Динамическое меню на React, bootstrap5
-
-Магия, меню работает на основе объекта модели BarData, только с ним
+Динамическое меню на React, bootstrap5 
+####Можно использовать как Tree;
+![Alt text](img1.png "Title")
+#### как меню;
+![Alt text](img2.png "Title")
+#### как меню в закрытом состоянии;
+![Alt text](img3.png "Title")
+Магия, меню работает на основе объекта модели BarData
 ``````
  class BarData extends Dispatcher{
     constructor() {
@@ -166,6 +171,7 @@ barData.on("onclick",(menuitem)=>{
 ```
 npm install https://github.com/ionson100/sidebarion
 ```
+использование:
 
 
 
