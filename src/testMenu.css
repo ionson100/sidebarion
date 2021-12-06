@@ -8,19 +8,6 @@
 
 }
 
-
-/*.menu ul {*/
-/*    padding-left: 0rem;*/
-/*    list-style-type: none;*/
-/*}*/
-
-/*.menu ul li {*/
-/*    padding-left: 0rem;*/
-
-/*    background-position: 0 0;*/
-/*    background-size: 1.6rem 1.6rem;*/
-/*    background-repeat: no-repeat;*/
-/*}*/
 .ionMenu{
     background: var(--background-menu);
     transition: all .1s linear;
@@ -142,21 +129,6 @@
     left: 17px;
     bottom: 6px;
 }
-
-
-
-
-
-/*#menu ul{*/
-/*    padding: 0;*/
-/*    padding-left: 10px; !*отступ слева - корневой элемент*!*/
-/*}*/
-
-/*#menu li {*/
-
-/*     padding: 0;*/
-/*    padding-left: 110px; !*отступ слева субменю от родителя*!*/
-/*}*/
 
 .container-fluid {
     padding: 0;
