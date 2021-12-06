@@ -4,7 +4,7 @@ import {
     BrowserRouter as Router,
     Link
 } from "react-router-dom";
-import "./expSide.css"
+// import "./expSide.css"
 import Image from "react-bootstrap/Image";
 
 import Tooltip from "react-bootstrap/Tooltip";
@@ -15,9 +15,9 @@ import { v4 as uuidv4 } from 'uuid';
 class SideBarion extends PureComponent{
     constructor(props) {
         super(props);
-         this.p=props;
+        this.p=props;
         this.state = {
-           barData:this.p.barData,
+            barData:this.p.barData,
             /**
              * так как PureComponent делает поверхностное сравнение состояния
              * пришлось добавить поле верхнего уровня, для рендеринга открытия закрытия вкладки меню
@@ -89,18 +89,18 @@ class SideBarion extends PureComponent{
      * @private
      */
     _createMap(menus){
-       let d= Array.prototype.slice.call(menus)
-       d.map((m)=>{
+        let d= Array.prototype.slice.call(menus)
+        d.map((m)=>{
 
-           if(this.mapMenu.has(m.id)===false){
-               this.mapMenu.set(m.id,m);
-           }
+            if(this.mapMenu.has(m.id)===false){
+                this.mapMenu.set(m.id,m);
+            }
 
-           if(m.menuItems.length>0){
-               this._createMap(m.menuItems);
-           }
-           return false;
-       })
+            if(m.menuItems.length>0){
+                this._createMap(m.menuItems);
+            }
+            return false;
+        })
     }
 
 
@@ -112,17 +112,22 @@ class SideBarion extends PureComponent{
 
         const  d=this.mapMenu.get(uuid);// получаем объект меню  из словаря
         if(d){
-            this.mapMenu.forEach((v)=>{
-                v._isSelect=false; // снимаем выделение со всех нодов
-            })
-            d._isSelect=true; // выделяем нажатый нод
-            d._isVisibleSubmenu = d._isVisibleSubmenu === false;// показываем или закрываем субменю у этого меню
-            if(this.currentMenuItem.id!==uuid){ // если текущее меню не совпадает с нажатым
-                this.currentMenuItem=d;// текущее делаем нажатым
-                this.isRender=true;// ставим метку, чтобы после рендеринга ушло сообщение наружу
+            if(d.isSelected===true){ // если запрещено выделять этот нод, выделение строго не снимаем
+                this.mapMenu.forEach((v)=>{
+                    v._isSelect=false; // снимаем выделение со всех нодов
+                })
 
+                d._isSelect=true; // выделяем нажатый нод
+                d._isVisibleSubmenu = d._isVisibleSubmenu === false;// показываем или закрываем субменю у этого меню
+                if(this.currentMenuItem.id!==uuid){ // если текущее меню не совпадает с нажатым
+                    this.currentMenuItem=d;// текущее делаем нажатым
+                    this.isRender=true;// ставим метку, чтобы после рендеринга ушло сообщение наружу
+
+                }
+                this.forceUpdate();// кучной рендеринг
             }
-            this.forceUpdate();// кучной рендеринг
+
+
 
 
 
@@ -161,12 +166,12 @@ class SideBarion extends PureComponent{
             }else{
                 if (typeof row.imageSrcOpen === 'string') {
                     return ((<div className="col-md-auto ionImageSubMenu ">
-                          <Image src={row.imageSrcO} alt={row.imageAlt} width={row.imageSize} height={row.imageSize}/>
+                        <Image src={row.imageSrcOpen} alt={row.imageAlt} width={row.imageSize} height={row.imageSize}/>
                     </div>));
                 } else {
                     return (
                         (<div className="col-md-auto ionImageSubMenu ">
-                           {row.imageSrcOpen}
+                            {row.imageSrcOpen}
                         </div>)
                     );
                 }
@@ -195,9 +200,9 @@ class SideBarion extends PureComponent{
                 (
 
                     <div className="col-md-auto ionImageToggle " >
-                      {row._isVisibleSubmenu===false?this.barData.imageToggleNode1:this.barData.imageToggleNode2}
+                        {row._isVisibleSubmenu===false?this.barData.imageToggleNode1:this.barData.imageToggleNode2}
                     </div>
-                  )
+                )
             );
         }
 
@@ -206,12 +211,12 @@ class SideBarion extends PureComponent{
     refreshContent(row){
         if(row.content){
             if(typeof row.content==="string"){
-               return(<span  >{row.content}</span>);
+                return(<span  >{row.content}</span>);
             }else{
                 return (<div>{row.content}</div>)
             }
         }else{
-          return(<span  >Not content</span>);
+            return(<span  >Not content</span>);
         }
     }
 
@@ -246,16 +251,33 @@ class SideBarion extends PureComponent{
                         return(
                             <li key={row.id} className="container  ionContainer " style={{display:row.isShow===true?"block":"none"}}>
 
-                                <Link to={row.href} className="ionLink">
+                                {row.isSelected?(
+
+                                    <Link to={row.href} className="ionLink">
+                                        <div  className={this.getClassNameSubMenuItem(row)} id={row.id} onClick={()=>{this.clickItem(row.id)}}>
+                                            {checkI.bind(this)(row,i)}
+                                            {this.refreshImage(row)}
+                                            <div className="col align-self-center">
+                                                {this.refreshContent(row)}
+                                            </div>
+                                            {this.refreshImageToggleMenu(row)}
+                                        </div>
+                                    </Link>
+
+                                ):(
+
                                     <div  className={this.getClassNameSubMenuItem(row)} id={row.id} onClick={()=>{this.clickItem(row.id)}}>
                                         {checkI.bind(this)(row,i)}
-                                       {this.refreshImage(row)}
+                                        {this.refreshImage(row)}
                                         <div className="col align-self-center">
                                             {this.refreshContent(row)}
                                         </div>
                                         {this.refreshImageToggleMenu(row)}
                                     </div>
-                                </Link>
+
+
+                                )}
+
                                 {this.renderSubmenu(row)}
                             </li>
                         );
@@ -274,6 +296,9 @@ class SideBarion extends PureComponent{
      * @returns {string}
      */
     getClassNameMenuItem(row){
+        if(row.isSelected===false){
+            return "row defaultMenuNotSelected"
+        }
         if(row._isSelect){
             return "row selectMenu"
         }else{
@@ -288,6 +313,9 @@ class SideBarion extends PureComponent{
      */
 
     getClassNameSubMenuItem(row){
+        if(row.isSelected===false){
+            return "row defaultSubMenuNotSelected"
+        }
         if(row._isSelect){
             return "row selectSubMenu"
         }else{
@@ -299,11 +327,11 @@ class SideBarion extends PureComponent{
 
         if(this.barData.isOpen){
             if(row){
-               if(row._isVisibleSubmenu===true){
-                   return "block";
-               }else{
-                   return "none";
-               }
+                if(row._isVisibleSubmenu===true){
+                    return "block";
+                }else{
+                    return "none";
+                }
             }
             return "block";
         }
@@ -364,13 +392,13 @@ class SideBarion extends PureComponent{
         if(row.tooltip&&this.barData.isOpen===false){ // если пользователь задал подсказку, и меню закрытое.
             return (
                 <OverlayTrigger  placement="right-end" overlay={<Tooltip id={row.id}>{row.tooltip}</Tooltip>}>
-                  <div className={this.getClassNameMenuItem(row)}  id={row.id}
-                      onClick={()=>{this.clickItem(row.id)}}>
-                      {this.refreshImage(row)}
-                      <div className="col align-self-center"  style={{display:this.getDisplay(null)}}>
-                        {this.refreshContent(row)}
-                     </div>
-                  </div>
+                    <div className={this.getClassNameMenuItem(row)}  id={row.id}
+                         onClick={()=>{this.clickItem(row.id)}}>
+                        {this.refreshImage(row)}
+                        <div className="col align-self-center"  style={{display:this.getDisplay(null)}}>
+                            {this.refreshContent(row)}
+                        </div>
+                    </div>
                 </OverlayTrigger>
             );
         }
@@ -419,11 +447,26 @@ class SideBarion extends PureComponent{
         document.addEventListener("mousemove", onMouseMove);
         document.addEventListener("mouseup", onMouseUp);
     }
+    paintHead(){
+        const v=this?.barData?.head?.isShow?? false;
+
+        if(v===false) return
+
+        const  s=this.barData?.head?.content??undefined
+        if(!s) return ;
+        if(React.isValidElement(s)){
+            return s
+        }
+        else{
+            return ( <span id="ionSideHeadText">{s}</span>)
+        }
+    }
     /**
      * рендериг корневого меню
      * @returns {JSX.Element}
      */
     render() {
+
         return(
             <Router>
                 <div data-ismove="1" className="movediv"  style={{background:"inherit",paddingRight:"3px",cursor:"e-resize"}}
@@ -431,30 +474,36 @@ class SideBarion extends PureComponent{
                     <div id="menu " className="menu" style={{cursor:"default"}}  onMouseDown={()=>{return false}}>
                         <div ref={this.ref1} className="ionMenu vh-100" style={{width: this.barData._currentWidth}}>
 
-                                <div className="ionSideHead" style={{display:this.getDisplay(null)}}>
-                                    <span id="ionSideHeadText">{this.barData?.head?.content??"None"}</span>
-                                </div>
+                            <div className="ionSideHead" style={{display:this.getDisplay(null)}}>
+                                {this.paintHead()}
+                            </div>
+                            <div className=" scrollDiv vh-100" >
                                 <ul className="nav">
                                     {this.barData.menuItems.map((row,i)=>{
                                         return (
                                             <li key={row.id} className="container  ionContainer p-0 menuitem" style={{display:row.isShow===true?"block":"none"}} >
-                                                <Link to={row.href} className="ionLink">
-                                                    {this.overlayTooltipMenu(row,i)}
-                                                </Link>
+                                                {row.isSelected?(
+                                                    <Link to={row.href} className="ionLink">
+                                                        {this.overlayTooltipMenu(row,i)}
+                                                    </Link>
+                                                ):(
+                                                    this.overlayTooltipMenu(row,i)
+                                                )}
+
                                                 {this.renderSubmenu(row)}
                                             </li>
                                         );
                                     })}
                                 </ul>
-
+                            </div>
                         </div>
 
                     </div>
 
 
-                <div className="hamburger" style={{cursor:"pointer",display:this.getDispalyToogleOpen()}} onClick={this.toggleMenu.bind(this)}>
-                    {this.getIconToggleMenu()}
-                </div>
+                    <div className="hamburger" style={{cursor:"pointer",display:this.getDisplayToggleOpen()}} onClick={this.toggleMenu.bind(this)}>
+                        {this.getIconToggleMenu()}
+                    </div>
                 </div>
 
             </Router>
@@ -478,7 +527,7 @@ class SideBarion extends PureComponent{
      * Обработка показа кнопки закрытия открытия меню
      * @returns {string}
      */
-    getDispalyToogleOpen() {
+    getDisplayToggleOpen() {
 
         if(this.barData.closeWidth===this.barData.openWidth){ // если ра
             return "none";

@@ -23,7 +23,7 @@ export default class WrapperSideBar {
 
 }
 
- class BarData extends Dispatcher{
+class BarData extends Dispatcher{
     constructor() {
         super();
         this.head=new Head();
@@ -34,6 +34,7 @@ export default class WrapperSideBar {
         this.menuItems=[]
         this._openWidth=300;
         this._currentWidth=300
+        this.mapMenu= new Map();
         /**
          * иконка для трее, строка или jsx
          * @type {string|JSX.Element}
@@ -66,15 +67,41 @@ export default class WrapperSideBar {
          * @type {string|JSX.Element}
          */
         this.iconToggleMenu=undefined
+        this.refreshMap.bind(this)
+
+
+
 
 
 
     }
 
-     /**
-      * установка ширины открытого меню
-      * @param value
-      */
+    /**
+     * Внутренний метод обновления словаря меню
+     */
+    refreshMap(){
+
+        this.menuItems.map((m)=>{
+            this._innerRefreshMap(m)
+
+        })
+    }
+    _innerRefreshMap(m){
+        if(this.mapMenu.has(m.id)===false){
+            this.mapMenu.set(m.id,m);
+        }
+        if(m.menuItems){
+            m.menuItems.map((mm)=>{
+                this._innerRefreshMap(mm)
+            })
+        }
+
+    }
+
+    /**
+     * установка ширины открытого меню
+     * @param value
+     */
     set openWidth(value){
         this._openWidth=value;
         this._currentWidth=value;
@@ -83,18 +110,41 @@ export default class WrapperSideBar {
         return this._openWidth;
     }
 
-     /**
-      * Обновление меню снаружи
-      */
+    /**
+     * Обновление меню снаружи
+     */
     forceUpdate(){
         this.dispatch("render",{})
     }
+
+    rollUp(){
+        if(this.menuItems){
+            this.menuItems.map((m)=>{this._innerPollUp(m)
+            })
+        }
+        this.forceUpdate();
+
+    }
+    _innerPollUp(menu=[]){
+
+        menu._isSelect=false;
+        menu._isVisibleSubmenu=false;
+        if(menu.menuitem){
+            menu.menuitem.map((m1)=>{
+                this._innerPollUp(m1)
+            })
+
+        }
+
+    }
+
+
 }
 
 /**
- * верняя часть меню, шапка
+ * верхняя часть меню, шапка
  */
- class Head {
+class Head {
     constructor(content="myApp",isShow=true) {
         /**
          * содержание, может принимать как строку так и react элемент
@@ -112,7 +162,7 @@ export default class WrapperSideBar {
 /**
  * Элемент меню
  */
- class MenuItem {
+class MenuItem {
     constructor() {
         /**
          * Идентификатор меню, уникальность по умолчанию uuid,
@@ -175,6 +225,23 @@ export default class WrapperSideBar {
          * @type {string|jsx}
          */
         this.imageSrcOpen=null;
+
+
+        /**
+         * Выделять меню или не выделять, случай - пользовательский компонент (тип курсора при наведении, поведение при наведении курсора, при клике )
+         * например если вы хотите сделать элемент меню, как выпадающий список, или строка ввода
+         * @type {boolean}
+         */
+        this.isSelected=true;
+
+        /**
+         * Пользовательские данные
+         * @type {undefined}
+         */
+        this.userData=undefined;
+        this.userData1=undefined;
+        this.userData2=undefined;
+        this.userData3=undefined;
     }
 }
 

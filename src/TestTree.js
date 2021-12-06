@@ -1,4 +1,4 @@
-import {BarData, MenuItem} from "./sidebar/WrapperSideBar";
+import {BarData, Head, MenuItem} from "./sidebar/WrapperSideBar";
 import { BiFolder,BiFolderOpen} from "react-icons/bi";
 import React from "react";
 import { MdSubdirectoryArrowRight } from "react-icons/md";
@@ -16,13 +16,16 @@ barData.iconToggleMenu=<FiAlignJustify size={30} color={colorImage}/>
 barData.imageToggleNode1=<BsCaretRight size={20} color={colorImage}/>
 barData.imageToggleNode2=<BsCaretDown  size={20} color={colorImage}/>
 
-//barData.head=new Head("Просто app",true)
+function myHeader(){
+ return(<img src="https://ucmrussia.ru/upload/medialibrary/851/851d4df328991d082ec9c66ea5c449f6.png" height={30}/>)
+}
+barData.head=new Head(myHeader())
 
 {
     const mymenu=new MenuItem();
-    mymenu.content="Просто1"
+    mymenu.content="Simple1"
     mymenu.isShow=true;
-    mymenu.href="Просто1";
+    mymenu.href="sinple1";
     mymenu.imageSrc=<BiFolder color={colorImage} size={imgSize}/>
 
     mymenu.imageSize=23;
@@ -30,17 +33,17 @@ barData.imageToggleNode2=<BsCaretDown  size={20} color={colorImage}/>
 }
 {
     const mymenu=new MenuItem();
-    mymenu.content= "Моя первая кнопка Моя первая кнопка Моя первая кнопка"
+    mymenu.content= "Simple my Firs Menu"
     mymenu.isShow=true;
     mymenu.href="Просто2";
     mymenu.imageSrc=<BiFolder  color={colorImage} size={imgSize}/>
     mymenu.imageSrcOpen=<BiFolderOpen  color={colorImage} size={imgSize}/>
     mymenu.imageSize=23;
-    mymenu.tooltip="Простое меню Моя первая кнопка"
+    mymenu.tooltip="Simple ny Firs Menu"
     barData.menuItems.push(mymenu);
     {
         const mi=new MenuItem();
-        mi.content="wwww1";
+        mi.content="content1";
         mi.href="/wwww1"
         mi.imageSize=imgSize;
         mi.isShow=true;
@@ -50,7 +53,7 @@ barData.imageToggleNode2=<BsCaretDown  size={20} color={colorImage}/>
     }
     {
         const mi=new MenuItem();
-        mi.content="wwww2";
+        mi.content="content2";
         mi.href="/wwww2"
         mi.imageSize=imgSize;
         mi.isShow=true;
@@ -59,7 +62,7 @@ barData.imageToggleNode2=<BsCaretDown  size={20} color={colorImage}/>
     }
     {
         const mi=new MenuItem();
-        mi.content="wwww3";
+        mi.content="content3";
         mi.href="/wwww3"
         mi.isShow=true;
         mi.imageSize=imgSize;
@@ -70,15 +73,15 @@ barData.imageToggleNode2=<BsCaretDown  size={20} color={colorImage}/>
 }
 {
     const mymenu=new MenuItem();
-    mymenu.content="Просто3"
+    mymenu.content="simple3"
     mymenu.isShow=true;
     mymenu.imageSrc=<BiFolder color={colorImage} size={imgSize}/>
     mymenu.imageSrcOpen=<BiFolderOpen  color={colorImage} size={imgSize}/>
     mymenu.imageSize=23;
-    mymenu.href="Просто3";
+    mymenu.href="Sinple3";
     {
         const mi=new MenuItem();
-        mi.content="wwww221";
+        mi.content="Content221";
         mi.href="/wwww221"
         mi.imageSize=imgSize;
         mi.imageSrc=<BiFolder  color={colorImage} size={imgSizeSm}/>
@@ -86,7 +89,7 @@ barData.imageToggleNode2=<BsCaretDown  size={20} color={colorImage}/>
     }
     {
         const mi=new MenuItem();
-        mi.content="wwww222";
+        mi.content="Content222";
         mi.href="/wwww222"
         mi.imageSize=imgSize;
         mi.imageSrc=<BiFolder  color={colorImage} size={imgSizeSm}/>
@@ -96,7 +99,7 @@ barData.imageToggleNode2=<BsCaretDown  size={20} color={colorImage}/>
 
     {
         const mi=new MenuItem();
-        mi.content="wwww223";
+        mi.content="Content223";
         mi.href="/wwww223"
         mi.imageSize=imgSize;
         mi.imageSrc=<BiFolder  color={colorImage} size={imgSizeSm}/>
@@ -106,7 +109,7 @@ barData.imageToggleNode2=<BsCaretDown  size={20} color={colorImage}/>
     }
     {
         const mi=new MenuItem();
-        mi.content="Маршрут:";
+        mi.content=" My Route";
         mi.href="/wwww221"
         mi.imageSize=imgSize;
         mi.imageSrc=<BiFolder color={colorImage} size={imgSizeSm}/>
@@ -114,7 +117,7 @@ barData.imageToggleNode2=<BsCaretDown  size={20} color={colorImage}/>
     }
     {
         const mi=new MenuItem();
-        mi.content="wwww22";
+        mi.content="My Route 2";
         mi.href="/wwww22"
         mi.imageSize=imgSize;
         mi.imageSrc=<BiFolder  color={colorImage} size={imgSizeSm}/>
@@ -123,7 +126,7 @@ barData.imageToggleNode2=<BsCaretDown  size={20} color={colorImage}/>
 
     {
         const mi=new MenuItem();
-        mi.content="wwww23";
+        mi.content="MyRoute 3";
         mi.href="/wwww23"
         mi.imageSize=imgSize;
         mi.imageSrc=<BiFolder color={colorImage} size={imgSizeSm}/>
@@ -133,7 +136,7 @@ barData.imageToggleNode2=<BsCaretDown  size={20} color={colorImage}/>
     }
     {
         const mi=new MenuItem();
-        mi.content="wwww21";
+        mi.content="My Route 4";
         mi.href="/wwww21"
         mi.imageSize=imgSize;
         mi.imageSrc=<BiFolder  color={colorImage} size={imgSizeSm}/>
@@ -141,7 +144,7 @@ barData.imageToggleNode2=<BsCaretDown  size={20} color={colorImage}/>
     }
     {
         const mi=new MenuItem();
-        mi.content="wwww22";
+        mi.content="Content 56";
         mi.href="/wwww22"
         mi.imageSize=imgSize;
         mi.imageSrc=<BiFolder  color={colorImage} size={imgSizeSm}/>
@@ -149,7 +152,7 @@ barData.imageToggleNode2=<BsCaretDown  size={20} color={colorImage}/>
     }
     {
         const mi=new MenuItem();
-        mi.content="wwww23";
+        mi.content="Content 55";
         mi.href="/wwww23"
         mi.imageSize=10;
         mi.imageSrc=<BiFolder color={colorImage} size={imgSizeSm} />
@@ -159,3 +162,4 @@ barData.imageToggleNode2=<BsCaretDown  size={20} color={colorImage}/>
     }
     barData.menuItems.push(mymenu);
 }
+

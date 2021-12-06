@@ -8,6 +8,7 @@ import {barData,imgSizeSm,colorImage} from "./TestTree"
 import './index.css';
 
 import { BiFolder,BiFolderOpen} from "react-icons/bi";
+import "./sidebar/expSide.css"
 
 
 const cont = {

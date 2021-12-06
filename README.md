@@ -47,6 +47,14 @@
         return this._openWidth;
     }
 
+   /**
+    * иконка состояния открытости ноды меню ...1- закрыта, ...2- открыта
+    * может принимать только React элемент (IconType)
+    * @type {JSX.Element}
+   */
+     this.imageToggleNode1=undefined
+     this.imageToggleNode2=undefined
+        
      /**
       * Обновление меню снаружи
       */
@@ -118,6 +126,22 @@
          * @type {undefined}
          */
         this.tooltip=undefined
+        
+         /**
+         * Выделять меню или не выделять, случай - пользовательский компонент (тип курсора при наведении, поведение при наведении курсора, при клике )
+         * например если вы хотите сделать элемент меню, как выпадающий список, или строка ввода
+         * @type {boolean}
+         */
+        this.isSelected=true;
+
+        /**
+         * Пользовательские данные
+         * @type {undefined}
+         */
+        this.userData=undefined;
+        this.userData1=undefined;
+        this.userData2=undefined;
+        this.userData3=undefined;
     }
 }
 ``````
@@ -138,8 +162,12 @@ barData.on("onclick",(menuitem)=>{
     //barData.forceUpdate(); рефрешим показ
 })
 `````
-Если будешь менять модель меню, не убивай струю, просто если насытишься новой, можешь
-обратно использовать старую, тогда можно подписаться и лямбдой.
-Проблемы, посмотри стилизацию статическую меню, срывает его при уменьшении размеров окна.
-webstorm без бекенда как обычно: npm install
+установка: 
+```
+npm install https://github.com/ionson100/sidebarion
+```
+
+
+
+
 
