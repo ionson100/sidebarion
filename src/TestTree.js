@@ -33,13 +33,13 @@ barData.head=new Head(myHeader())
 }
 {
     const mymenu=new MenuItem();
-    mymenu.content= "Simple my Firs Menu"
+    mymenu.content= "Simple my First Menu"
     mymenu.isShow=true;
     mymenu.href="Просто2";
     mymenu.imageSrc=<BiFolder  color={colorImage} size={imgSize}/>
     mymenu.imageSrcOpen=<BiFolderOpen  color={colorImage} size={imgSize}/>
     mymenu.imageSize=23;
-    mymenu.tooltip="Simple ny Firs Menu"
+    mymenu.tooltip="Simple my First Menu"
     barData.menuItems.push(mymenu);
     {
         const mi=new MenuItem();

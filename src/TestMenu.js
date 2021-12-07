@@ -52,7 +52,7 @@ barData.head=new Head(myHeader())
     mymenu.href="Просто2";
     mymenu.imageSrc=<AiFillCloud  color={colorImage} size={imgSize}/>
     mymenu.imageSize=23;
-    mymenu.tooltip="Simple ny Firs Menu"
+    mymenu.tooltip="Simple my First Menu"
     barData.menuItems.push(mymenu);
 
     {
