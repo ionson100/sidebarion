@@ -181,12 +181,12 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
 
           d._isVisibleSubmenu = d._isVisibleSubmenu === false; // показываем или закрываем субменю у этого меню
 
-          if (this.currentMenuItem.id !== uuid) {
+          // if (this.currentMenuItem.id !== uuid) {
             // если текущее меню не совпадает с нажатым
             this.currentMenuItem = d; // текущее делаем нажатым
 
             this.isRender = true; // ставим метку, чтобы после рендеринга ушло сообщение наружу
-          }
+          // }
 
           this.forceUpdate(); // кучной рендеринг
         }
