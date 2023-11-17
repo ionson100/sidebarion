@@ -16,6 +16,7 @@ class SideBarion extends PureComponent{
     constructor(props) {
         super(props);
         this.p=props;
+
         this.state = {
             barData:this.p.barData,
             /**
@@ -24,6 +25,8 @@ class SideBarion extends PureComponent{
              */
             markerUpdate:uuidv4()
         };
+        this.resizeEvent=this.p.barData.resizeEvent;
+        this.openCloseMenuEvent=this.p.barData.openCloseMenuEvent;
         /**
          * это словарь всех нод меню, ключем является id меню,а занчением ссылка на объект меню
          * для быстрого поиска по щелчку
@@ -43,7 +46,9 @@ class SideBarion extends PureComponent{
          * Маркер для возбуждения события наружу, что пользователь кликнул меню
          * @type {boolean}
          */
-        this.isRender=false;
+        // this.isRender=false;
+
+        this.isClickHamburger=false;
 
         this.ref1=React.createRef();
 
@@ -77,10 +82,17 @@ class SideBarion extends PureComponent{
      */
     componentDidUpdate(){
 
+        if(this.isClickHamburger) {
+
+            if(this.openCloseMenuEvent){
+                this.openCloseMenuEvent();
+            }
+            return;
+        }
         //if(this.isRender){
-            this.isRender=false;
+           //this.isRender=false;
             this.barData.dispatch("onclick",this.currentMenuItem);
-       // }
+        // }
     }
 
     /**
@@ -110,6 +122,7 @@ class SideBarion extends PureComponent{
      */
     clickItem(uuid) {
 
+        this.isClickHamburger=false;
         const  d=this.mapMenu.get(uuid);// получаем объект меню  из словаря
         if(d){
             if(d.isSelected===true){ // если запрещено выделять этот нод, выделение строго не снимаем
@@ -121,7 +134,7 @@ class SideBarion extends PureComponent{
                 d._isVisibleSubmenu = d._isVisibleSubmenu === false;// показываем или закрываем субменю у этого меню
                 // if(this.currentMenuItem.id!==uuid){ // если текущее меню не совпадает с нажатым
                     this.currentMenuItem=d;// текущее делаем нажатым
-                    this.isRender=true;// ставим метку, чтобы после рендеринга ушло сообщение наружу
+                    // this.isRender=true;// ставим метку, чтобы после рендеринга ушло сообщение наружу
 
                 // }
                 this.forceUpdate();// кучной рендеринг
@@ -360,6 +373,7 @@ class SideBarion extends PureComponent{
      */
     toggleMenu(){
 
+        this.isClickHamburger=true;
         if(this.barData.isOpen){
 
             this.setState(prevState => {
@@ -433,6 +447,7 @@ class SideBarion extends PureComponent{
     }
 
     handler(e){
+        const action=this.resizeEvent
         if(!e.target.getAttribute("data-ismove")) return;
         const self=this;
         function onMouseMove(e) {
@@ -454,6 +469,14 @@ class SideBarion extends PureComponent{
 
         }
         function onMouseUp() {
+            if(action){
+                const dw=document.querySelector(".movediv")
+                if(dw){
+                    console.info(dw)
+                   action(dw.clientWidth)
+                }
+
+            }
             // отключаем обработчики мышки, отпускания клавиши мышки
             document.removeEventListener("mousemove", onMouseMove);
             document.removeEventListener("mouseup", onMouseUp);

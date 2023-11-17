@@ -66,6 +66,8 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
        */
       markerUpdate: (0, _uuid.v4)()
     };
+    _this.resizeEvent = _this.p.barData.resizeEvent;
+    _this.openCloseMenuEvent = _this.p.barData.openCloseMenuEvent;
     /**
      * это словарь всех нод меню, ключем является id меню,а занчением ссылка на объект меню
      * для быстрого поиска по щелчку
@@ -91,8 +93,9 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
      * Маркер для возбуждения события наружу, что пользователь кликнул меню
      * @type {boolean}
      */
+    // this.isRender=false;
 
-    _this.isRender = false;
+    _this.isClickHamburger = false;
     _this.ref1 = /*#__PURE__*/_react.default.createRef();
     return _this;
   }
@@ -132,8 +135,16 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
-      //if(this.isRender){
-      this.isRender = false;
+      if (this.isClickHamburger) {
+        if (this.openCloseMenuEvent) {
+          this.openCloseMenuEvent();
+        }
+
+        return;
+      } //if(this.isRender){
+      //this.isRender=false;
+
+
       this.barData.dispatch("onclick", this.currentMenuItem); // }
     }
     /**
@@ -168,6 +179,7 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
   }, {
     key: "clickItem",
     value: function clickItem(uuid) {
+      this.isClickHamburger = false;
       var d = this.mapMenu.get(uuid); // получаем объект меню  из словаря
 
       if (d) {
@@ -182,8 +194,7 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
           // if(this.currentMenuItem.id!==uuid){ // если текущее меню не совпадает с нажатым
 
           this.currentMenuItem = d; // текущее делаем нажатым
-
-          this.isRender = true; // ставим метку, чтобы после рендеринга ушло сообщение наружу
+          // this.isRender=true;// ставим метку, чтобы после рендеринга ушло сообщение наружу
           // }
 
           this.forceUpdate(); // кучной рендеринг
@@ -264,6 +275,29 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
       }
     }
   }, {
+    key: "refreshContentHtml",
+    value: function refreshContentHtml(row) {
+      if (row.content) {
+        if (typeof row.content === "string") {
+          var ss = /*#__PURE__*/_react.default.createElement("div", {
+            div: true,
+            className: "col align-self-center",
+            dangerouslySetInnerHTML: {
+              __html: row.content
+            }
+          });
+
+          return ss;
+        } else {
+          return /*#__PURE__*/_react.default.createElement("div", {
+            className: "col align-self-center"
+          }, row.content);
+        }
+      } else {
+        return /*#__PURE__*/_react.default.createElement("span", null, "Not content");
+      }
+    }
+  }, {
     key: "refreshContent",
     value: function refreshContent(row) {
       if (row.content) {
@@ -334,17 +368,13 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
             onClick: function onClick() {
               _this4.clickItem(row.id);
             }
-          }, checkI.bind(_this4)(row, i), _this4.refreshImage(row), /*#__PURE__*/_react.default.createElement("div", {
-            className: "col align-self-center"
-          }, _this4.refreshContent(row)), _this4.refreshImageToggleMenu(row))) : /*#__PURE__*/_react.default.createElement("div", {
+          }, checkI.bind(_this4)(row, i), _this4.refreshImage(row), _this4.refreshContentHtml(row), _this4.refreshImageToggleMenu(row))) : /*#__PURE__*/_react.default.createElement("div", {
             className: _this4.getClassNameSubMenuItem(row),
             id: row.id,
             onClick: function onClick() {
               _this4.clickItem(row.id);
             }
-          }, checkI.bind(_this4)(row, i), _this4.refreshImage(row), /*#__PURE__*/_react.default.createElement("div", {
-            className: "col align-self-center"
-          }, _this4.refreshContent(row)), _this4.refreshImageToggleMenu(row)), _this4.renderSubmenu(row));
+          }, checkI.bind(_this4)(row, i), _this4.refreshImage(row), _this4.refreshContentHtml(row), _this4.refreshImageToggleMenu(row)), _this4.renderSubmenu(row));
         }));
       } else {
         return "";
@@ -413,6 +443,8 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
     key: "toggleMenu",
     value: function toggleMenu() {
       var _this5 = this;
+
+      this.isClickHamburger = true;
 
       if (this.barData.isOpen) {
         this.setState(function (prevState) {
@@ -492,6 +524,7 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
   }, {
     key: "handler",
     value: function handler(e) {
+      var action = this.resizeEvent;
       if (!e.target.getAttribute("data-ismove")) return;
       var self = this;
 
@@ -515,7 +548,16 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
       }
 
       function onMouseUp() {
-        // отключаем обработчики мышки, отпускания клавиши мышки
+        if (action) {
+          var dw = document.querySelector(".movediv");
+
+          if (dw) {
+            console.info(dw);
+            action(dw.clientWidth);
+          }
+        } // отключаем обработчики мышки, отпускания клавиши мышки
+
+
         document.removeEventListener("mousemove", onMouseMove);
         document.removeEventListener("mouseup", onMouseUp);
       } // подключаем обработчики события мышки

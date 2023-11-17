@@ -22,8 +22,6 @@ barData.on("onclick",(menuitem)=>{
     const state = { 'page_id': 1, 'user_id': 5 }
     const title = ''
 
-
-
     window.history.replaceState(state, title, menuitem.href)
     initContent(cont)
     //menuitem.isShow=false;
@@ -92,7 +90,11 @@ d3.onclick=function (){
 
 barData.closeWidth=60;// ширина зарытого
 barData.openWidth=280;// ширина открытого
-barData.isOpen=true;  // состояние  - открыто
+barData.isOpen=true;  // состояние - открыто
+barData.resizeEvent;// событие окончания изменения размера меню
+barData.openCloseMenuEvent=function (){
+
+};// событие открытия закрытия меню
 
 /**
  * создаем меню
