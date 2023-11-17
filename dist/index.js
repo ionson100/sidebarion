@@ -126,16 +126,15 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
       }, true);
     }
     /**
-     * отсылка сообщения наружк, клик по меню
+     * отсылка сообщения наружу, клик по меню
      */
 
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
-      if (this.isRender) {
-        this.isRender = false;
-        this.barData.dispatch("onclick", this.currentMenuItem);
-      }
+      //if(this.isRender){
+      this.isRender = false;
+      this.barData.dispatch("onclick", this.currentMenuItem); // }
     }
     /**
      * пополнение словаря новыми нодами меню ( при старте и при рендеринге снаружи)
@@ -269,7 +268,13 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
     value: function refreshContent(row) {
       if (row.content) {
         if (typeof row.content === "string") {
-          return /*#__PURE__*/_react.default.createElement("span", null, row.content);
+          var ss = /*#__PURE__*/_react.default.createElement("div", {
+            dangerouslySetInnerHTML: {
+              __html: row.content
+            }
+          });
+
+          return ss;
         } else {
           return /*#__PURE__*/_react.default.createElement("div", null, row.content);
         }

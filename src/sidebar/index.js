@@ -73,14 +73,14 @@ class SideBarion extends PureComponent{
     }
 
     /**
-     * отсылка сообщения наружк, клик по меню
+     * отсылка сообщения наружу, клик по меню
      */
     componentDidUpdate(){
 
-        if(this.isRender){
+        //if(this.isRender){
             this.isRender=false;
             this.barData.dispatch("onclick",this.currentMenuItem);
-        }
+       // }
     }
 
     /**
@@ -209,9 +209,11 @@ class SideBarion extends PureComponent{
     }
 
     refreshContent(row){
+
         if(row.content){
             if(typeof row.content==="string"){
-                return(<span  >{row.content}</span>);
+                var ss=<div dangerouslySetInnerHTML={{__html: row.content}} />
+                return(ss);
             }else{
                 return (<div>{row.content}</div>)
             }

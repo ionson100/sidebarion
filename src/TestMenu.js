@@ -59,7 +59,7 @@ barData.head=new Head(myHeader())
 
     {
         const mi=new MenuItem();
-        mi.content="My Route 4";
+        mi.content="<div>My Route 4</div>";
         mi.href="/wwww21"
         mi.imageSize=imgSize;
         mi.imageSrc=<AiOutlineAndroid  color={colorImage} size={imgSizeSm}/>
