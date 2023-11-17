@@ -50,6 +50,7 @@ class SideBarion extends PureComponent{
         // this.isRender=false;
 
         this.isClickHamburger=false;
+        this.isForceUpdate=false;
 
         this.ref1=React.createRef();
 
@@ -65,6 +66,7 @@ class SideBarion extends PureComponent{
      */
     componentDidMount() {
         this.barData.on("render",()=>{
+            this.isForceUpdate=true;
             this._createMap(this.barData.menuItems)
             this.forceUpdate();
         })
@@ -88,6 +90,10 @@ class SideBarion extends PureComponent{
             if(this.openCloseMenuEvent){
                 this.openCloseMenuEvent();
             }
+            return;
+        }
+        if(this.isForceUpdate===true){
+            this.isForceUpdate=false;
             return;
         }
         //if(this.isRender){
