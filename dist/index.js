@@ -524,7 +524,9 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
   }, {
     key: "handler",
     value: function handler(e) {
-      var action = this.resizeEvent;
+      var action = this.resizeEvent; // eslint-disable-next-line no-unused-vars
+
+      var innerOpenWidth = this.p.barData.openWidth;
       if (!e.target.getAttribute("data-ismove")) return;
       var self = this;
 
@@ -548,13 +550,14 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
       }
 
       function onMouseUp() {
-        if (action) {
-          var dw = document.querySelector(".movediv");
+        var dw = document.querySelector(".movediv");
 
-          if (dw) {
-            console.info(dw);
-            action(dw.clientWidth);
-          }
+        if (dw) {
+          innerOpenWidth = dw.clientWidth;
+        }
+
+        if (action) {
+          action(dw.clientWidth);
         } // отключаем обработчики мышки, отпускания клавиши мышки
 
 

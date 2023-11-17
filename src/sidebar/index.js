@@ -17,6 +17,7 @@ class SideBarion extends PureComponent{
         super(props);
         this.p=props;
 
+
         this.state = {
             barData:this.p.barData,
             /**
@@ -274,7 +275,7 @@ class SideBarion extends PureComponent{
 
             return(
 
-                <ul className="flex" style={{display:this.getDisplay(menuItem)}}>
+                <ul className="flex" data_ul={menuItem.id}  style={{display:this.getDisplay(menuItem)}}>
                     {menuItem.menuItems.map((row,i)=>{
                         return(
                             <li key={row.id} className="container  ionContainer " style={{display:row.isShow===true?"block":"none"}}>
@@ -448,6 +449,8 @@ class SideBarion extends PureComponent{
 
     handler(e){
         const action=this.resizeEvent
+
+        let innerBardata=this.p.barData;
         if(!e.target.getAttribute("data-ismove")) return;
         const self=this;
         function onMouseMove(e) {
@@ -469,13 +472,12 @@ class SideBarion extends PureComponent{
 
         }
         function onMouseUp() {
+            const dw=document.querySelector(".movediv")
+            if(dw){
+                innerBardata.openWidth=dw.clientWidth;
+            }
             if(action){
-                const dw=document.querySelector(".movediv")
-                if(dw){
-                    console.info(dw)
                    action(dw.clientWidth)
-                }
-
             }
             // отключаем обработчики мышки, отпускания клавиши мышки
             document.removeEventListener("mousemove", onMouseMove);
@@ -519,7 +521,7 @@ class SideBarion extends PureComponent{
                                 <ul className="nav">
                                     {this.barData.menuItems.map((row,i)=>{
                                         return (
-                                            <li key={row.id} className="container  ionContainer p-0 menuitem" style={{display:row.isShow===true?"block":"none"}} >
+                                            <li key={row.id} className="container  ionContainer p-0 menuitem"  style={{display:row.isShow===true?"block":"none"}} >
                                                 {row.isSelected?(
                                                     <Link to={row.href} className="ionLink">
                                                         {this.overlayTooltipMenu(row,i)}
