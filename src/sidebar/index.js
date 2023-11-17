@@ -207,6 +207,19 @@ class SideBarion extends PureComponent{
         }
 
     }
+    refreshContentHtml(row){
+
+        if(row.content){
+            if(typeof row.content==="string"){
+                var ss=<div div className="col align-self-center" dangerouslySetInnerHTML={{__html: row.content}} />
+                return(ss);
+            }else{
+                return (<div  className="col align-self-center">{row.content}</div>)
+            }
+        }else{
+            return(<span  >Not content</span>);
+        }
+    }
 
     refreshContent(row){
 
@@ -259,9 +272,9 @@ class SideBarion extends PureComponent{
                                         <div  className={this.getClassNameSubMenuItem(row)} id={row.id} onClick={()=>{this.clickItem(row.id)}}>
                                             {checkI.bind(this)(row,i)}
                                             {this.refreshImage(row)}
-                                            <div className="col align-self-center">
-                                                {this.refreshContent(row)}
-                                            </div>
+
+                                                {this.refreshContentHtml(row)}
+
                                             {this.refreshImageToggleMenu(row)}
                                         </div>
                                     </Link>
@@ -271,9 +284,9 @@ class SideBarion extends PureComponent{
                                     <div  className={this.getClassNameSubMenuItem(row)} id={row.id} onClick={()=>{this.clickItem(row.id)}}>
                                         {checkI.bind(this)(row,i)}
                                         {this.refreshImage(row)}
-                                        <div className="col align-self-center">
-                                            {this.refreshContent(row)}
-                                        </div>
+
+                                        {this.refreshContentHtml(row)}
+
                                         {this.refreshImageToggleMenu(row)}
                                     </div>
 
