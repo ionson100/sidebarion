@@ -96,6 +96,7 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
     // this.isRender=false;
 
     _this.isClickHamburger = false;
+    _this.isForceUpdate = false;
     _this.ref1 = /*#__PURE__*/_react.default.createRef();
     return _this;
   }
@@ -116,6 +117,8 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
       var _this2 = this;
 
       this.barData.on("render", function () {
+        _this2.isForceUpdate = true;
+
         _this2._createMap(_this2.barData.menuItems);
 
         _this2.forceUpdate();
@@ -140,6 +143,11 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
           this.openCloseMenuEvent();
         }
 
+        return;
+      }
+
+      if (this.isForceUpdate === true) {
+        this.isForceUpdate = false;
         return;
       } //if(this.isRender){
       //this.isRender=false;
@@ -349,6 +357,7 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
       if (menuItem.menuItems.length > 0) {
         return /*#__PURE__*/_react.default.createElement("ul", {
           className: "flex",
+          "data-ul": menuItem.id,
           style: {
             display: this.getDisplay(menuItem)
           }
@@ -524,9 +533,8 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
   }, {
     key: "handler",
     value: function handler(e) {
-      var action = this.resizeEvent; // eslint-disable-next-line no-unused-vars
-
-      var innerOpenWidth = this.p.barData.openWidth;
+      var action = this.resizeEvent;
+      var innerBardata = this.p.barData;
       if (!e.target.getAttribute("data-ismove")) return;
       var self = this;
 
@@ -553,7 +561,7 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
         var dw = document.querySelector(".movediv");
 
         if (dw) {
-          innerOpenWidth = dw.clientWidth;
+          innerBardata.openWidth = dw.clientWidth;
         }
 
         if (action) {

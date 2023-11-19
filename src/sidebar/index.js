@@ -281,7 +281,7 @@ class SideBarion extends PureComponent{
 
             return(
 
-                <ul className="flex" data_ul={menuItem.id}  style={{display:this.getDisplay(menuItem)}}>
+                <ul className="flex" data-ul={menuItem.id}  style={{display:this.getDisplay(menuItem)}}>
                     {menuItem.menuItems.map((row,i)=>{
                         return(
                             <li key={row.id} className="container  ionContainer " style={{display:row.isShow===true?"block":"none"}}>

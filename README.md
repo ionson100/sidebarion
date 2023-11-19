@@ -171,7 +171,7 @@ barData.on("onclick",(menuitem)=>{
 ```
 npm install https://github.com/ionson100/sidebarion
 ```
-### использование: index.js
+### использование: index1.js
 ```javascript
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals'
