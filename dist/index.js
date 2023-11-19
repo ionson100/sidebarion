@@ -19,6 +19,8 @@ var _OverlayTrigger = _interopRequireDefault(require("react-bootstrap/OverlayTri
 
 var _uuid = require("uuid");
 
+var _objectHash = _interopRequireDefault(require("object-hash"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -357,7 +359,7 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
       if (menuItem.menuItems.length > 0) {
         return /*#__PURE__*/_react.default.createElement("ul", {
           className: "flex",
-          "data-ul": menuItem.id,
+          "data-ul": (0, _objectHash.default)(menuItem.content),
           style: {
             display: this.getDisplay(menuItem)
           }

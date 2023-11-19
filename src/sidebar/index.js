@@ -11,6 +11,7 @@ import Tooltip from "react-bootstrap/Tooltip";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import {PureComponent} from "react";
 import { v4 as uuidv4 } from 'uuid';
+import hash  from 'object-hash'
 
 class SideBarion extends PureComponent{
     constructor(props) {
@@ -255,6 +256,7 @@ class SideBarion extends PureComponent{
         }
     }
 
+
     renderSubmenu(menuItem){
 
         const {iconTree,iconTreeSize}=this.state.barData
@@ -281,7 +283,7 @@ class SideBarion extends PureComponent{
 
             return(
 
-                <ul className="flex" data-ul={menuItem.id}  style={{display:this.getDisplay(menuItem)}}>
+                <ul className="flex" data-ul={hash(menuItem.content)}  style={{display:this.getDisplay(menuItem)}}>
                     {menuItem.menuItems.map((row,i)=>{
                         return(
                             <li key={row.id} className="container  ionContainer " style={{display:row.isShow===true?"block":"none"}}>
