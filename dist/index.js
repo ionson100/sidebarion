@@ -125,6 +125,9 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
 
         _this2.forceUpdate();
       });
+      this.barData.on("clickmenu", function (id) {
+        _this2.clickItem(id);
+      });
       window.addEventListener('resize', function () {
         if (document.body.clientWidth < 770 && _this2.barData.isOpen) {
           _this2.toggleMenu();
@@ -360,6 +363,7 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
         return /*#__PURE__*/_react.default.createElement("ul", {
           className: "flex",
           "data-ul": (0, _objectHash.default)(menuItem.content),
+          "data-ul-id": menuItem.id,
           style: {
             display: this.getDisplay(menuItem)
           }

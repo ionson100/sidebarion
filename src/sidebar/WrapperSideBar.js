@@ -68,12 +68,11 @@ class BarData extends Dispatcher{
          */
         this.iconToggleMenu=undefined
         this.refreshMap.bind(this)
-
-
-
-
-
-
+        /**
+         * Событие изменения ручного ширины меню
+         * @type {undefined}
+         */
+        this.resizeEvent=undefined;
     }
 
     /**
@@ -115,6 +114,16 @@ class BarData extends Dispatcher{
      */
     forceUpdate(){
         this.dispatch("render",{})
+    }
+
+    /**
+     * программный клик по меню снаружи
+     * @param id
+     */
+
+    onClickMenu(id){
+
+        this.dispatch("clickmenu",id)
     }
 
     rollUp(){

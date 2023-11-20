@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 import WrapperSideBar, {MenuItem} from "./sidebar/WrapperSideBar";
 //import { FaRoute} from 'react-icons/fa';,imgSize
-//import {barData,imgSizeSm,colorImage} from "./TestTree"
+// import {barData,imgSizeSm,colorImage} from "./TestTree"
 import {barData,imgSizeSm,colorImage} from "./TestMenu"
 import './index.css';
 
@@ -78,6 +78,16 @@ const d3=document.getElementById('bt3');
 d3.onclick=function (){
     barData.menuItems[1].content="Test"
     barData.forceUpdate();
+}
+const d4=document.getElementById('bt4');
+d4.onclick=function (){
+ document.querySelectorAll('[data-ul]').forEach((e)=>{
+     const  id=e.getAttribute('data-ul-id');
+     barData.onClickMenu(id)
+
+ })
+    //barData.onClickMenu('122')
+    //barData.forceUpdate();
 }
 
 

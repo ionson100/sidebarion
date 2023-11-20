@@ -71,6 +71,11 @@ class SideBarion extends PureComponent{
             this._createMap(this.barData.menuItems)
             this.forceUpdate();
         })
+
+        this.barData.on("clickmenu",(id)=>{
+
+            this.clickItem(id);
+        })
         window.addEventListener('resize', () => {
             if(document.body.clientWidth < 770 && this.barData.isOpen) {
                 this.toggleMenu();
@@ -283,7 +288,7 @@ class SideBarion extends PureComponent{
 
             return(
 
-                <ul className="flex" data-ul={hash(menuItem.content)}  style={{display:this.getDisplay(menuItem)}}>
+                <ul className="flex" data-ul={hash(menuItem.content)} data-ul-id={menuItem.id}  style={{display:this.getDisplay(menuItem)}}>
                     {menuItem.menuItems.map((row,i)=>{
                         return(
                             <li key={row.id} className="container  ionContainer " style={{display:row.isShow===true?"block":"none"}}>

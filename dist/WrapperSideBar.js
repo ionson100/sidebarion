@@ -123,7 +123,13 @@ var BarData = /*#__PURE__*/function (_Dispatcher) {
     _this.iconToggleMenu = undefined;
 
     _this.refreshMap.bind(_assertThisInitialized(_this));
+    /**
+     * Событие изменения ручного ширины меню
+     * @type {undefined}
+     */
 
+
+    _this.resizeEvent = undefined;
     return _this;
   }
   /**
@@ -177,6 +183,16 @@ var BarData = /*#__PURE__*/function (_Dispatcher) {
     key: "forceUpdate",
     value: function forceUpdate() {
       this.dispatch("render", {});
+    }
+    /**
+     * программный клик по меню снаружи
+     * @param id
+     */
+
+  }, {
+    key: "onClickMenu",
+    value: function onClickMenu(id) {
+      this.dispatch("clickmenu", id);
     }
   }, {
     key: "rollUp",
