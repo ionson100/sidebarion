@@ -194,6 +194,10 @@ var BarData = /*#__PURE__*/function (_Dispatcher) {
     value: function onClickMenu(id) {
       this.dispatch("clickmenu", id);
     }
+    /**
+     * очистка меню
+     */
+
   }, {
     key: "clearItems",
     value: function clearItems() {

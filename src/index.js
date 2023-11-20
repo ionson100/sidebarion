@@ -81,11 +81,13 @@ d3.onclick=function (){
 }
 const d4=document.getElementById('bt4');
 d4.onclick=function (){
- document.querySelectorAll('[data-ul]').forEach((e)=>{
-     const  id=e.getAttribute('data-ul-id');
-     barData.onClickMenu(id)
-
- })
+    barData.clearItems()
+    barData.forceUpdate()
+ // document.querySelectorAll('[data-ul]').forEach((e)=>{
+ //     const  id=e.getAttribute('data-ul-id');
+ //     barData.onClickMenu(id)
+ //
+ // })
     //barData.onClickMenu('122')
     //barData.forceUpdate();
 }

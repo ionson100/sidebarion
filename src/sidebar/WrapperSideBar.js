@@ -126,6 +126,10 @@ class BarData extends Dispatcher{
         this.dispatch("clickmenu",id)
     }
 
+    /**
+     * очистка меню
+     */
+
     clearItems(){
 
         this.dispatch("clearItems",{})
