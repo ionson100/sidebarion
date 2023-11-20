@@ -195,6 +195,11 @@ var BarData = /*#__PURE__*/function (_Dispatcher) {
       this.dispatch("clickmenu", id);
     }
   }, {
+    key: "clearItems",
+    value: function clearItems() {
+      this.dispatch("clearItems", {});
+    }
+  }, {
     key: "rollUp",
     value: function rollUp() {
       var _this4 = this;

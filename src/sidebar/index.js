@@ -72,6 +72,11 @@ class SideBarion extends PureComponent{
             this.forceUpdate();
         })
 
+        this.barData.on("clearItems",()=>{
+            this.mapMenu=new Map();
+            this.barData.menuItems
+        })
+
         this.barData.on("clickmenu",(id)=>{
 
             this.clickItem(id);

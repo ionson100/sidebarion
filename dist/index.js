@@ -125,6 +125,10 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
 
         _this2.forceUpdate();
       });
+      this.barData.on("clearItems", function () {
+        _this2.mapMenu = new Map();
+        _this2.barData.menuItems;
+      });
       this.barData.on("clickmenu", function (id) {
         _this2.clickItem(id);
       });

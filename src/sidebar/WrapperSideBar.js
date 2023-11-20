@@ -126,6 +126,11 @@ class BarData extends Dispatcher{
         this.dispatch("clickmenu",id)
     }
 
+    clearItems(){
+
+        this.dispatch("clearItems",{})
+    }
+
     rollUp(){
         if(this.menuItems){
             this.menuItems.map((m)=>{this._innerPollUp(m)
