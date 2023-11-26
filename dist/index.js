@@ -100,6 +100,7 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
     _this.isClickHamburger = false;
     _this.isForceUpdate = false;
     _this.ref1 = /*#__PURE__*/_react.default.createRef();
+    _this.iSAction = undefined;
     return _this;
   }
 
@@ -129,8 +130,8 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
         _this2.mapMenu = new Map();
         _this2.p.barData.menuItems = [];
       });
-      this.barData.on("clickmenu", function (id) {
-        _this2.clickItem(id);
+      this.barData.on("clickmenu", function (id, isAction) {
+        _this2.clickItem(id, isAction);
       });
       window.addEventListener('resize', function () {
         if (document.body.clientWidth < 770 && _this2.barData.isOpen) {
@@ -147,6 +148,8 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate() {
+      if (this.iSAction === false) return;
+
       if (this.isClickHamburger) {
         if (this.openCloseMenuEvent) {
           this.openCloseMenuEvent();
@@ -195,7 +198,8 @@ var SideBarion = /*#__PURE__*/function (_PureComponent) {
 
   }, {
     key: "clickItem",
-    value: function clickItem(uuid) {
+    value: function clickItem(uuid, isAction) {
+      this.iSAction = isAction;
       this.isClickHamburger = false;
       var d = this.mapMenu.get(uuid); // получаем объект меню  из словаря
 

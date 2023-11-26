@@ -121,9 +121,9 @@ class BarData extends Dispatcher{
      * @param id
      */
 
-    onClickMenu(id){
+    onClickMenu(id,isEventAction){
 
-        this.dispatch("clickmenu",id)
+        this.dispatch("clickmenu",id,isEventAction)
     }
 
     /**

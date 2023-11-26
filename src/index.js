@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 import WrapperSideBar, {MenuItem} from "./sidebar/WrapperSideBar";
 //import { FaRoute} from 'react-icons/fa';,imgSize
+ import {barData,imgSizeSm,colorImage} from "./TestTree"
 // import {barData,imgSizeSm,colorImage} from "./TestTree"
-import {barData,imgSizeSm,colorImage} from "./TestMenu"
 import './index.css';
 
 import { BiFolder,BiFolderOpen} from "react-icons/bi";
@@ -80,17 +80,34 @@ d3.onclick=function (){
     barData.forceUpdate();
 }
 const d4=document.getElementById('bt4');
+const d5=document.getElementById('bt5');
+const d6=document.getElementById('bt6');
+
 d4.onclick=function (){
-    barData.clearItems()
-    barData.forceUpdate()
- // document.querySelectorAll('[data-ul]').forEach((e)=>{
- //     const  id=e.getAttribute('data-ul-id');
- //     barData.onClickMenu(id)
- //
- // })
+
+ document.querySelectorAll('[data-ul]').forEach((e)=>{
+     const  id=e.getAttribute('data-ul-id');
+     barData.onClickMenu(id)
+
+ })
     //barData.onClickMenu('122')
     //barData.forceUpdate();
 }
+d5.onclick=function (){
+    barData.clearItems()
+    barData.forceUpdate()
+
+}
+d6.onclick=function (){
+
+    document.querySelectorAll('[data-ul]').forEach((e)=>{
+        const  id=e.getAttribute('data-ul-id');
+        barData.onClickMenu(id,false)
+
+    })
+
+}
+
 
 
 

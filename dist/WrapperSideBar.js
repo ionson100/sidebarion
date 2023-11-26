@@ -191,8 +191,8 @@ var BarData = /*#__PURE__*/function (_Dispatcher) {
 
   }, {
     key: "onClickMenu",
-    value: function onClickMenu(id) {
-      this.dispatch("clickmenu", id);
+    value: function onClickMenu(id, isEventAction) {
+      this.dispatch("clickmenu", id, isEventAction);
     }
     /**
      * очистка меню

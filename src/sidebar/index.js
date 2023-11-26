@@ -54,6 +54,7 @@ class SideBarion extends PureComponent{
         this.isForceUpdate=false;
 
         this.ref1=React.createRef();
+        this.iSAction=undefined;
 
     }
 
@@ -80,9 +81,9 @@ class SideBarion extends PureComponent{
             this.p.barData.menuItems=[];
         })
 
-        this.barData.on("clickmenu",(id)=>{
+        this.barData.on("clickmenu",(id,isAction)=>{
 
-            this.clickItem(id);
+            this.clickItem(id,isAction);
         })
         window.addEventListener('resize', () => {
             if(document.body.clientWidth < 770 && this.barData.isOpen) {
@@ -99,6 +100,7 @@ class SideBarion extends PureComponent{
      */
     componentDidUpdate(){
 
+        if(this.iSAction===false) return;
         if(this.isClickHamburger) {
 
             if(this.openCloseMenuEvent){
@@ -141,8 +143,9 @@ class SideBarion extends PureComponent{
      * пользователь кликнул, по меню
      * @param uuid
      */
-    clickItem(uuid) {
+    clickItem(uuid,isAction) {
 
+        this.iSAction=isAction;
         this.isClickHamburger=false;
         const  d=this.mapMenu.get(uuid);// получаем объект меню  из словаря
         if(d){
