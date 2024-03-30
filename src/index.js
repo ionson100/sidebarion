@@ -3,13 +3,10 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 import WrapperSideBar, {MenuItem} from "./sidebar/WrapperSideBar";
-//import { FaRoute} from 'react-icons/fa';,imgSize
- import {barData,imgSizeSm,colorImage} from "./TestTree"
-// import {barData,imgSizeSm,colorImage} from "./TestTree"
+import {barData,imgSizeSm,colorImage} from "./TestTree"
 import './index.css';
 
 import { BiFolder,BiFolderOpen} from "react-icons/bi";
-//import "./sidebar/expSide.css"
 import "./testMenu.css"
 
 
@@ -18,7 +15,7 @@ const cont = {
 };
 
 barData.on("onclick",(menuitem)=>{
-    cont.name=menuitem.href;
+    cont.name=JSON.stringify(menuitem);
     const state = { 'page_id': 1, 'user_id': 5 }
     const title = ''
 
@@ -31,7 +28,7 @@ barData.on("onclick",(menuitem)=>{
 function  initContent(props){
     const element = (
         <div>
-            <h2 className="myClassName">{props.name}</h2>
+            <h2 className="myClassName">{!props.name?'null':props.name}</h2>
         </div>
     );
     ReactDOM.render(element, document.getElementById('content'));

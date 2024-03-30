@@ -25,7 +25,8 @@ barData.head=new Head(myHeader())
     const mymenu=new MenuItem();
     mymenu.content="Simple1"
     mymenu.isShow=true;
-    mymenu.href="sinple1";
+    mymenu.href=undefined;
+    mymenu.userData="2344"
     mymenu.imageSrc=<BiFolder color={colorImage} size={imgSize}/>
 
     mymenu.imageSize=23;
@@ -127,7 +128,7 @@ barData.head=new Head(myHeader())
     {
         const mi=new MenuItem();
         mi.content="MyRoute 3";
-        mi.href="/wwww23"
+        mi.href=undefined
         mi.imageSize=imgSize;
         mi.imageSrc=<BiFolder color={colorImage} size={imgSizeSm}/>
 

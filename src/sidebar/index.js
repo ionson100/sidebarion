@@ -273,6 +273,7 @@ class SideBarion extends PureComponent{
     }
 
 
+
     renderSubmenu(menuItem){
 
         const {iconTree,iconTreeSize}=this.state.barData
@@ -295,6 +296,7 @@ class SideBarion extends PureComponent{
 
 
         }
+
         if(menuItem.menuItems.length>0){
 
             return(
@@ -302,20 +304,32 @@ class SideBarion extends PureComponent{
                 <ul className="flex" data-ul={hash(menuItem.content)} data-ul-id={menuItem.id}  style={{display:this.getDisplay(menuItem)}}>
                     {menuItem.menuItems.map((row,i)=>{
                         return(
-                            <li key={row.id} className="container  ionContainer " style={{display:row.isShow===true?"block":"none"}}>
+                            <li key={row.id} className="container  ionContainer " data-user-menu={row.userData?row.userData:''} style={{display:row.isShow===true?"block":"none"}}>
 
                                 {row.isSelected?(
 
-                                    <Link to={row.href} className="ionLink">
+                                    row.href===undefined?(
+                                        <div  className="ionLink">
+                                            <div  className={this.getClassNameSubMenuItem(row)} id={row.id} onClick={()=>{this.clickItem(row.id)}}>
+                                                {checkI.bind(this)(row,i)}
+                                                {this.refreshImage(row)}
+
+                                                {this.refreshContentHtml(row)}
+
+                                                {this.refreshImageToggleMenu(row)}
+                                            </div>
+                                        </div>
+                                    ):(
+                                        <Link to={row.href} className="ionLink">
                                         <div  className={this.getClassNameSubMenuItem(row)} id={row.id} onClick={()=>{this.clickItem(row.id)}}>
                                             {checkI.bind(this)(row,i)}
                                             {this.refreshImage(row)}
 
-                                                {this.refreshContentHtml(row)}
+                                            {this.refreshContentHtml(row)}
 
                                             {this.refreshImageToggleMenu(row)}
                                         </div>
-                                    </Link>
+                                    </Link>)
 
                                 ):(
 
@@ -525,6 +539,21 @@ class SideBarion extends PureComponent{
             return ( <span id="ionSideHeadText">{s}</span>)
         }
     }
+    renderLinc(row,i){
+        if(row.href){
+            return(
+                <Link to={row.href}   className="ionLink">
+                    {this.overlayTooltipMenu(row,i)}
+                </Link>
+            )
+        }else{
+           return (
+               <diw  className="ionLink" >
+                   {this.overlayTooltipMenu(row,i)}
+               </diw>
+           )
+        }
+    }
     /**
      * рендериг корневого меню
      * @returns {JSX.Element}
@@ -545,11 +574,9 @@ class SideBarion extends PureComponent{
                                 <ul className="nav">
                                     {this.barData.menuItems.map((row,i)=>{
                                         return (
-                                            <li key={row.id} className="container  ionContainer p-0 menuitem"  style={{display:row.isShow===true?"block":"none"}} >
+                                            <li key={row.id} className="container  ionContainer p-0 menuitem" data-user-menu={row.userData?row.userData:''}  style={{display:row.isShow===true?"block":"none"}} >
                                                 {row.isSelected?(
-                                                    <Link to={row.href} className="ionLink">
-                                                        {this.overlayTooltipMenu(row,i)}
-                                                    </Link>
+                                                    this.renderLinc(row,i)
                                                 ):(
                                                     this.overlayTooltipMenu(row,i)
                                                 )}

@@ -252,6 +252,8 @@ class MenuItem {
          */
         this.isSelected=true;
 
+
+
         /**
          * Пользовательские данные
          * @type {undefined}
